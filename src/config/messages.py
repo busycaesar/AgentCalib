@@ -2,9 +2,5 @@ messages = [
     {
         "role": "system",
         "content": "You are assistant."
-    },
-    {
-        "role": "user",
-        "content": "Hello"
     }
 ]

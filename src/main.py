@@ -1,6 +1,4 @@
-from agent import agent_ask
-from config.messages import messages
+from chat import run_chat
 
-response = agent_ask(messages)
-
-print(response)
+if __name__ == "__main__":
+    run_chat()
