@@ -19,7 +19,24 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills** — plai
 
 - [x] Basic OpenAI chat-completion agent
 - [ ] Skills — add `.md` files to `src/skills/` for the agent to use
-- [ ] Chat interface to interact with the agent and test skills
+- [ ] Tools — add function-calling tools to `src/tools/` for the agent to invoke
+- [ ] MCP servers — connect MCP servers via `src/mcp/` for the agent to use
+- [ ] Chat interface to interact with the agent and test skills, tools, and MCP servers
+
+## Project Structure
+
+```text
+.
+├── .env                  # OpenAI credentials (not committed)
+├── src/
+│   ├── main.py           # Entry point
+│   ├── agent.py          # Sends messages to the OpenAI model and returns the response
+│   ├── config/
+│   │   ├── client.py     # OpenAI client setup
+│   │   └── messages.py   # Static message list sent to the agent
+│   └── skills/           # Drop .md skill files here (currently empty)
+└── README.md
+```
 
 ## How to run the project?
 
