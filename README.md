@@ -33,13 +33,13 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 ```text
 .
-├── src/
-│   ├── main.py    # Entry point
-│   ├── chat.py    # Interactive terminal chat loop
-│   ├── agent.py   # Talks to the OpenAI model and runs tool calls it requests
-│   ├── config/    # OpenAI client setup, seed messages, and shared paths
-│   ├── tools/     # Tool schemas and implementations available to the agent
-│   └── skills/    # Skill files live here (currently empty; not yet read by the agent)
+ src/
+ ├── main.py    # Entry point
+ ├── chat.py    # Interactive terminal chat loop
+ ├── agent.py   # Talks to the OpenAI model and runs tool calls it requests
+ ├── config/    # OpenAI client setup, seed messages, and shared paths
+ ├── tools/     # Tool schemas and implementations available to the agent
+ └── skills/    # Skill files live here (currently empty; not yet read by the agent)
 ```
 
 ## How to run the project?
