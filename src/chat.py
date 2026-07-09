@@ -1,6 +1,5 @@
 from agent import agent_run
 from config.messages import messages
-from skill_command import get_skill_content
 
 GOODBYE = "Goodbye!"
 
@@ -24,21 +23,10 @@ def run_chat():
             print(GOODBYE)
             break
 
-        skill_content = get_skill_content(user_input)
-
-        if skill_content is not None:
-            messages.append({"role": "assistant", "content": skill_content})
-
-        messages.append({"role": "user", "content": user_input})
-
         try:
-            response = agent_run(messages)
+            response = agent_run(messages, user_input)
         except Exception as error:
-            messages.pop()
-            if skill_content is not None:
-                messages.pop()
             print(f"Error: {error}. Please try again.")
             continue
 
-        messages.append({"role": "assistant", "content": response})
         print(f"Assistant: {response}")
