@@ -59,6 +59,10 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
    python src/main.py
    ```
 
+## License
+
+[MIT](LICENSE)
+
 ## Author
 
 [Dev J. Shah](https://github.com/busycaesar)
