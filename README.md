@@ -44,7 +44,11 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 ## How to run the project?
 
-1. Create a virtual environment and install dependencies (`openai`, `python-dotenv`).
+1. Create a virtual environment and install dependencies:
+
+   ```bash
+   pip install -r req.txt
+   ```
 2. Copy your OpenAI credentials into a `.env` file at the project root:
 
    ```text
