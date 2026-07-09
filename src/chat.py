@@ -1,4 +1,4 @@
-from agent import agent_ask
+from agent import agent_run
 from config.messages import messages
 
 GOODBYE = "Goodbye!"
@@ -26,7 +26,7 @@ def run_chat():
         messages.append({"role": "user", "content": user_input})
 
         try:
-            response = agent_ask(messages)
+            response = agent_run(messages)
         except Exception as error:
             messages.pop()
             print(f"Error: {error}. Please try again.")

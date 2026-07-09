@@ -1,4 +1,4 @@
-from src.tools.create_skill import create_skill
+from .create_skill import create_skill
 
 # The list of tools and required arguments, to assist the LLM.
 tools = [
