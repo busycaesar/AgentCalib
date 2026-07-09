@@ -2,51 +2,58 @@
 
 ## Description
 
-AgentCalib is an LLM-powered agent that you extend by adding **skills** — plain `.md` files placed in `src/skills/`. Each skill describes a capability or piece of knowledge the agent can draw on. The agent reads these skills and uses them to answer questions and carry out workflows, so the goal is to empower the LLM by simply dropping in more skill files.
+AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on. The agent reads these skills and uses them to answer questions and carry out workflows, so the goal is to empower the LLM by simply dropping in more skill files.
 
-> **Status: early-stage / work in progress.** The current codebase implements a minimal OpenAI chat-completion agent (`src/agent.py`) with a static message list. The `src/skills/` directory exists but is currently empty. There is no chat interface yet for interacting with the agent or testing skills — that's the next piece to be built.
+> **Status: early-stage / work in progress.** The current codebase implements an OpenAI chat-completion agent with an interactive terminal chat loop and one function-calling tool, which lets the LLM create a new skill on request. Nothing reads those skills back into the agent's context yet. MCP server support is not yet implemented.
 
 ## Tech Stack
 
 ![Image Alt](https://skillicons.dev/icons?i=python)
 
 - Python
+
+## AI Stack
+
 - [OpenAI SDK](https://github.com/openai/openai-python)
+- Model: `gpt-4o-mini`
+- Function calling (tools) for agent actions
 
 ## How it looks?
 
 ## Features
 
-- [x] Basic OpenAI chat-completion agent
-- [ ] Skills — add `.md` files to `src/skills/` for the agent to use
-- [ ] Tools — add function-calling tools to `src/tools/` for the agent to invoke
-- [ ] MCP servers — connect MCP servers via `src/mcp/` for the agent to use
-- [ ] Chat interface to interact with the agent and test skills, tools, and MCP servers
+- [x] Basic chat-completion agent
+- [x] Interactive terminal chat interface
+- [x] Ask the agent to create a new skill, and it will do it for you
+- [ ] Skills — agent does not yet read skills back into its context
+- [ ] MCP servers — connect MCP servers for the agent to use
 
 ## Project Structure
 
 ```text
 .
-├── .env                  # OpenAI credentials (not committed)
 ├── src/
-│   ├── main.py           # Entry point
-│   ├── agent.py          # Sends messages to the OpenAI model and returns the response
-│   ├── config/
-│   │   ├── client.py     # OpenAI client setup
-│   │   └── messages.py   # Static message list sent to the agent
-│   └── skills/           # Drop .md skill files here (currently empty)
+│   ├── main.py    # Entry point
+│   ├── chat.py    # Interactive terminal chat loop
+│   ├── agent.py   # Talks to the OpenAI model and runs tool calls it requests
+│   ├── config/    # OpenAI client setup, seed messages, and shared paths
+│   ├── tools/     # Tool schemas and implementations available to the agent
+│   └── skills/    # Skill files live here (currently empty; not yet read by the agent)
 └── README.md
 ```
 
 ## How to run the project?
 
-1. Create a virtual environment and install dependencies (`openai`, `python-dotenv`).
-2. Copy your OpenAI credentials into a `.env` file at the project root:
+1. Create a virtual environment and install dependencies from `req.txt`:
 
-   ```text
-   OPENAI_API_KEY="..."
-   OPENAI_ORG_ID="..."
-   OPENAI_PROJECT="..."
+   ```bash
+   pip install -r req.txt
+   ```
+
+2. Copy `.env.example` to `.env` at the project root, then fill in your OpenAI credentials:
+
+   ```bash
+   cp .env.example .env
    ```
 
 3. Run the agent:
