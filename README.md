@@ -16,7 +16,6 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 - [OpenAI SDK](https://github.com/openai/openai-python)
 - Model: `gpt-4o-mini`
-- Function calling (tools) for agent actions
 
 ## How it looks?
 
@@ -41,21 +40,17 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 │   ├── config/    # OpenAI client setup, seed messages, and shared paths
 │   ├── tools/     # Tool schemas and implementations available to the agent
 │   └── skills/    # Skill files live here (currently empty; not yet read by the agent)
-└── README.md
 ```
 
 ## How to run the project?
 
-1. Create a virtual environment and install dependencies from `req.txt`:
+1. Create a virtual environment and install dependencies (`openai`, `python-dotenv`).
+2. Copy your OpenAI credentials into a `.env` file at the project root:
 
-   ```bash
-   pip install -r req.txt
-   ```
-
-2. Copy `.env.example` to `.env` at the project root, then fill in your OpenAI credentials:
-
-   ```bash
-   cp .env.example .env
+   ```text
+   OPENAI_API_KEY="..."
+   OPENAI_ORG_ID="..."
+   OPENAI_PROJECT="..."
    ```
 
 3. Run the agent:
