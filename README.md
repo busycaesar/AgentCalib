@@ -20,6 +20,8 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 ## How it looks?
 
+<img width="1365" height="616" alt="Screenshot From 2026-07-09 09-42-05" src="https://github.com/user-attachments/assets/fb59705c-4548-4517-b3d7-a0d32348df54" />
+
 ## Features
 
 - [x] Basic chat-completion agent
