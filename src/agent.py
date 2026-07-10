@@ -21,14 +21,18 @@ def agent_run(messages, user_input):
     messages.append({"role": "user", "content": user_input})
 
     try:
-        llm_message = agent_ask(messages)
+        while True:
+            llm_message = agent_ask(messages)
+            
+            if not llm_message.tool_calls:
+                response = llm_message.content
+                break
 
-        if llm_message.tool_calls:
+            messages.append(llm_message)
+
             for tool_call in llm_message.tool_calls:
                 function_name = tool_call.function.name
                 function_arguments = json.loads(tool_call.function.arguments)
-
-                messages.append(llm_message)
 
                 result = call_function(function_name, function_arguments)
 
@@ -40,9 +44,6 @@ def agent_run(messages, user_input):
                     }
                 )
 
-            llm_message = agent_ask(messages)
-
-        response = llm_message.content
     except Exception:
         messages.pop()
         if skill_content is not None:

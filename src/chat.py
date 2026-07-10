@@ -3,7 +3,6 @@ from config.messages import messages
 
 GOODBYE = "Goodbye!"
 
-
 def run_chat():
     print("AgentCalib chat. Type 'exit' or 'quit' to leave.")
 
