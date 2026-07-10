@@ -1,5 +1,7 @@
 # AgentCalib
 
+<img width="1000" height="250" alt="banner" src="https://github.com/user-attachments/assets/d4bd7925-6fdd-4152-826a-23a8d6ca0ca2" />
+
 ## Description
 
 AgentCalib is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
