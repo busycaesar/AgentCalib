@@ -55,6 +55,20 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 ## How to run the project?
 
+### Option 1: Install script
+
+```bash
+bash scripts/install.sh
+```
+
+This clones AgentCalib, sets up an isolated Python environment, prompts for your OpenAI credentials, and installs an `agentcalib` command on your `PATH`. Once it finishes, run the agent from anywhere:
+
+```bash
+agentcalib
+```
+
+### Option 2: Manual setup (for development)
+
 1. Create a virtual environment and install dependencies:
 
    ```bash
