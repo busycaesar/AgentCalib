@@ -1,5 +1,5 @@
 from config.client import client
-from skill_command import get_skill_content
+from core.slash_command import get_skill_content
 from tools import tools, call_function
 import json
 
