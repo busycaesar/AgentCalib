@@ -5,3 +5,6 @@ def create_skill(skill_content, skill_name):
 
     with open(skill_path, "w") as file:
         file.write(skill_content)
+
+def browse_internet(query):
+    return "Result"
