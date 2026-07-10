@@ -2,15 +2,13 @@
 
 ## Description
 
-AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on. The agent reads these skills and uses them to answer questions and carry out workflows, so the goal is to empower the LLM by simply dropping in more skill files.
+AgentCalib is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
 
 > **Status: early-stage / work in progress.** The current codebase implements an OpenAI chat-completion agent with an interactive terminal chat loop, a `create_skill` tool the LLM can call to save new skills, and a `/skill_name` chat command that loads a saved skill back into the conversation. The agent can also chain multiple tool calls in a row before giving a final answer. MCP server support is not yet implemented.
 
 ## Tech Stack
 
 ![Image Alt](https://skillicons.dev/icons?i=python)
-
-- Python
 
 ## AI Stack
 
@@ -23,34 +21,25 @@ AgentCalib is an LLM-powered agent that you extend by adding **skills**, **tools
 
 ## Features
 
-- [x] Basic chat-completion agent
-- [x] Interactive terminal chat interface
-- [x] Ask the agent to create a new skill, and it will do it for you
-- [x] Skills — type `/skill_name` in chat to load a saved skill into the conversation
-- [x] Agent chains multiple tool calls in a row before giving a final answer
-- [x] Install script (`scripts/install.sh`) for a global `agentcalib` command
-- [ ] MCP servers — connect MCP servers for the agent to use
-
-## Using Skills
-
-- Ask the agent to create one, e.g. "create a skill for writing commit messages" — it saves a new skill for later use.
-- In any later chat, type `/<skill_name>` (matching the skill's name, case-sensitive) to load that skill's content into the conversation, e.g. `/commit fix the login bug`. Any text after the command is sent along as your actual request.
-- If no skill matches the command, your message is sent through as normal chat text.
+- Chat with the agent right from your terminal
+- Ask the agent to create a new skill, and it will save one for later use
+- Bring a saved skill into a conversation whenever you need it
+- The agent can work through multiple steps on its own before giving you a final answer
+- Install once and run the agent from anywhere on your machine
 
 ## Project Structure
 
 ```text
 .
  src/
- ├── main.py           # Entry point
- ├── chat.py           # Interactive terminal chat loop
- ├── agent.py          # Talks to the OpenAI model, runs tool calls, loops until a final answer
- ├── skill_command.py  # Resolves a "/skill_name" chat command into skill file content
- ├── config/           # OpenAI client setup, seed messages, and shared paths
- ├── tools/             # Tool schemas and implementations available to the agent
- └── skills/            # Skill files live here, loaded via "/skill_name" in chat
+ ├── main.py    # Entry point
+ ├── chat.py    # Interactive terminal chat loop
+ ├── core/      # Agent loop and skill/tool orchestration
+ ├── config/    # OpenAI client setup, seed messages, and shared paths
+ ├── tools/     # Tool schemas and implementations available to the agent
+ └── skills/    # Skill files live here
  scripts/
- └── install.sh        # Installs AgentCalib into ~/.agentcalib and adds `agentcalib` to PATH
+ └── install.sh # Installs AgentCalib into ~/.agentcalib and adds `agentcalib` to PATH
 ```
 
 ## How to run the project?
@@ -74,6 +63,7 @@ agentcalib
    ```bash
    pip install -r req.txt
    ```
+
 2. Copy your OpenAI credentials into a `.env` file at the project root:
 
    ```text
