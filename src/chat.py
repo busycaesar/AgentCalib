@@ -1,4 +1,4 @@
-from agent import agent_run
+from core.agent import agent_run
 from config.messages import messages
 
 GOODBYE = "Goodbye!"
