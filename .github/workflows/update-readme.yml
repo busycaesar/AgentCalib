@@ -1,0 +1,26 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - Master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    name: Update Readme.md
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: update
+        uses: busycaesar/always-readme@Master
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          openai-org-id: ${{ secrets.OPENAI_ORG_ID }}
+          openai-project: ${{ secrets.OPENAI_PROJECT }}
+          github-token: ${{ secrets.GH_TOKEN }}
