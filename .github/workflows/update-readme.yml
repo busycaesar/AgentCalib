@@ -23,4 +23,4 @@ jobs:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-org-id: ${{ secrets.OPENAI_ORG_ID }}
           openai-project: ${{ secrets.OPENAI_PROJECT }}
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
