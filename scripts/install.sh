@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Installs AgentCalib into ~/.agentcalib and puts an `agentcalib` launcher on PATH.
+# Installs Mosfet into ~/.mosfet and puts a `mosfet` launcher on PATH.
 set -euo pipefail
 
-REPO_URL="https://github.com/busycaesar/AgentCalib.git"
+REPO_URL="https://github.com/busycaesar/Mosfet.git"
 BRANCH="Master"
-INSTALL_DIR="$HOME/.agentcalib"
+INSTALL_DIR="$HOME/.mosfet"
 VENV_DIR="$INSTALL_DIR/.venv"
 BIN_DIR="$HOME/.local/bin"
-LAUNCHER="$BIN_DIR/agentcalib"
+LAUNCHER="$BIN_DIR/mosfet"
 ENV_FILE="$INSTALL_DIR/.env"
 
 err() {
@@ -20,14 +20,14 @@ command -v python3 >/dev/null 2>&1 || err "python3 is required but not installed
 
 if [ -d "$INSTALL_DIR/.git" ]; then
     origin_url="$(git -C "$INSTALL_DIR" remote get-url origin)"
-    [ "$origin_url" = "$REPO_URL" ] || err "$INSTALL_DIR exists and is not an AgentCalib clone (origin: $origin_url)."
+    [ "$origin_url" = "$REPO_URL" ] || err "$INSTALL_DIR exists and is not a Mosfet clone (origin: $origin_url)."
 
     echo "Updating existing installation..."
     git -C "$INSTALL_DIR" pull --ff-only origin "$BRANCH"
 elif [ -e "$INSTALL_DIR" ]; then
     err "$INSTALL_DIR already exists and is not a git repository. Remove it and re-run this script."
 else
-    echo "Cloning AgentCalib into $INSTALL_DIR..."
+    echo "Cloning Mosfet into $INSTALL_DIR..."
     git clone --branch "$BRANCH" "$REPO_URL" "$INSTALL_DIR"
 fi
 
@@ -44,7 +44,7 @@ if [ ! -f "$ENV_FILE" ]; then
     read -r -s -p "OPENAI_ORG_ID: " openai_org_id
     read -r -s -p "OPENAI_PROJECT: " openai_project
 
-    [ -n "$openai_api_key" ] || echo "Warning: no API key entered. Edit $ENV_FILE before running agentcalib."
+    [ -n "$openai_api_key" ] || echo "Warning: no API key entered. Edit $ENV_FILE before running mosfet."
 
     cat > "$ENV_FILE" <<EOF
 OPENAI_API_KEY="$openai_api_key"
@@ -65,7 +65,7 @@ EOF
 chmod +x "$LAUNCHER"
 
 echo
-echo "AgentCalib installed successfully."
+echo "Mosfet installed successfully."
 
 case ":$PATH:" in
     *":$BIN_DIR:"*) ;;
@@ -78,4 +78,4 @@ case ":$PATH:" in
 esac
 
 echo
-echo "Run 'agentcalib' from anywhere to start chatting."
+echo "Run 'mosfet' from anywhere to start chatting."
