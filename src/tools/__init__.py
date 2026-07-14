@@ -10,10 +10,14 @@ tools = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "skill_content": {"type": "string"},
-                    "skill_name": {"type": "string"},
+                    "name": {
+                        "type": "string",
+                        "description": "A short, filesystem-safe identifier for the skill, used directly as the filename. Use snake_case, capped at 2 words, unless the user explicitly specifies a different name."
+                    },
+                    "description": {"type": "string"},
+                    "content": { "type": "string" },
                 },
-                "required": ["skill_content", "skill_name"],
+                "required": ["name", "description", "content"],
                 "additionalProperties": False,
             },
             "strict": True
