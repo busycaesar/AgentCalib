@@ -1,4 +1,4 @@
-from src.config.paths import SKILLS_DIR
+from config.paths import SKILLS_DIR
 
 def get_skill_content(user_input):
     if not user_input.startswith("/"):
