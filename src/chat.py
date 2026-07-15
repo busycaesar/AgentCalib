@@ -1,10 +1,12 @@
 from core.agent import agent_run
 from config.messages import messages
+from config.banner import BANNER, WELCOME_MESSAGE
 
 GOODBYE = "Goodbye!"
 
 def run_chat():
-    print("Mosfet chat. Type 'exit' or 'quit' to leave.")
+    print(BANNER)
+    print(WELCOME_MESSAGE)
 
     while True:
         try:
