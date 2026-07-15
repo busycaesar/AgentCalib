@@ -6,7 +6,7 @@
 
 Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
 
-> **Status: early-stage / work in progress.** The current codebase implements an OpenAI chat-completion agent with an interactive terminal chat loop, a `create_skill` tool the LLM can call to save new skills, and a `/skill_name` chat command that loads a saved skill back into the conversation. The agent can also chain multiple tool calls in a row before giving a final answer. MCP server support is not yet implemented.
+> **Status: early-stage / work in progress.** The current codebase implements an OpenAI chat-completion agent with an interactive terminal chat loop, a tool the LLM can call to save new skills, and a `/skill_name` chat command that loads a saved skill back into the conversation. The agent is also told what skills are available to it at the start of every conversation, and can decide on its own to load and follow one when it fits the request. The agent can chain multiple tool calls in a row before giving a final answer. MCP server support is not yet implemented.
 
 ## Tech Stack
 
@@ -26,6 +26,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 - Chat with the agent right from your terminal
 - Ask the agent to create a new skill, and it will save one for later use
 - Bring a saved skill into a conversation whenever you need it
+- The agent knows which skills it has available and can recognize on its own when one applies, loading it without you having to ask
 - The agent can work through multiple steps on its own before giving you a final answer
 - Install once and run the agent from anywhere on your machine
 
