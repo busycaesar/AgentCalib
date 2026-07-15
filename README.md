@@ -1,6 +1,6 @@
 # Mosfet
 
-<img width="1000" height="250" alt="banner" src="https://github.com/user-attachments/assets/d4bd7925-6fdd-4152-826a-23a8d6ca0ca2" />
+<img width="1000" height="250" alt="mosfet" src="https://github.com/user-attachments/assets/665d93f4-fe6d-4e2c-8195-67a266f7e244" />
 
 ## Description
 
