@@ -1,4 +1,4 @@
-from utils.skills import get_skill_by_name
+from utils import get_skill_by_name
 
 def get_skill_content(user_input):
     if not user_input.startswith("/"):

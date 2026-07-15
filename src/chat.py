@@ -1,6 +1,5 @@
-from core.agent import agent_run
-from config.messages import messages
-from config.banner import BANNER, WELCOME_MESSAGE
+from core import agent_run, messages
+from config import BANNER, WELCOME_MESSAGE
 
 GOODBYE = "Goodbye!"
 
