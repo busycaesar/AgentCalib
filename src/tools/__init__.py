@@ -1,12 +1,12 @@
-from .internal import create_skill, browse_internet
+from .internal import add_new_skill, browse_internet, get_skill_content
 
 # The list of tools and required arguments, to assist the LLM.
 tools = [
     {
         "type": "function",
         "function": {
-            "name": "create_skill",
-            "description": "Create a new skill file for the user.",
+            "name": "add_new_skill",
+            "description": "Add a new skill for the user.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -20,6 +20,22 @@ tools = [
                 "required": ["name", "description", "content"],
                 "additionalProperties": False,
             },
+            "strict": True
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_skill_content",
+            "description": "Load the full instructions for one of your available skills by name, so you can follow them.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string", "description": "Exact skill name from your available skills list."}
+                },
+                "required": ["name"],
+                "additionalProperties": False,
+            },  
             "strict": True
         }
     },
@@ -42,7 +58,9 @@ tools = [
 ]
 
 def call_function(name, args):
-    if name == "create_skill":
-        return create_skill(**args)
+    if name == "add_new_skill":
+        return add_new_skill(**args)
+    elif name == "get_skill_content":
+        return get_skill_content(**args)
     elif name == "browse_internet":
         return browse_internet(**args)
