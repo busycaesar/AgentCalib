@@ -1,5 +1,5 @@
-from config.paths import SKILLS_DIR
-from utils.skills import build_skill_file, update_skills_index, get_skill_by_name
+from config import SKILLS_DIR
+from utils import build_skill_file, update_skills_index, get_skill_by_name
 
 def create_new_skill(name, description, content):
     name = name.lower().replace(" ", "_")

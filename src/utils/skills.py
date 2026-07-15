@@ -1,4 +1,4 @@
-from config.paths import SKILLS_DIR
+from config import SKILLS_DIR
 import json
 
 DELIMITER = "---"
