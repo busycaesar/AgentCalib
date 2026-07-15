@@ -30,7 +30,7 @@ def get_skill_by_name(name):
     if not skill_path.is_file():
         return None
 
-    return skill_path.read_text()
+    return skill_path.read_text().strip()
 
 def update_skills_index(name, description):
     index = get_skills_list()

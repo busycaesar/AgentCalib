@@ -15,12 +15,10 @@ def add_new_skill(name, description, content):
     update_skills_index(name, description)
 
 def get_skill_content(name):
-    print("Agent Using Skill.", name)
-
     content = get_skill_by_name(name)
 
     if not content:
-        return "No skill"
+        return f"No skill available with name {name}."
     
     return content
 
