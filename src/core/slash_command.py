@@ -1,4 +1,4 @@
-from config.paths import SKILLS_DIR
+from utils.skills import get_skill_by_name
 
 def get_skill_content(user_input):
     if not user_input.startswith("/"):
@@ -9,9 +9,4 @@ def get_skill_content(user_input):
     if not parts:
         return None
 
-    skill_path = SKILLS_DIR / f"{parts[0]}.md"
-
-    if not skill_path.is_file():
-        return None
-
-    return skill_path.read_text()
+    return get_skill_by_name(parts[0])
