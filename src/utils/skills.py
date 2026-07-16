@@ -22,7 +22,10 @@ def get_skills_list():
     if not content:
         return {}
 
-    return json.loads(content)
+    try:
+        return json.loads(content)
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"Skills index at {SKILLS_INDEX_PATH} is corrupted: {error}") from error
 
 def get_skill_by_name(name):
     skill_path = SKILLS_DIR / f"{name}.md"
@@ -37,4 +40,3 @@ def update_skills_index(name, description):
     index[name] = description
 
     SKILLS_INDEX_PATH.write_text(json.dumps(index, indent=2))
-

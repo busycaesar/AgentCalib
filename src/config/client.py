@@ -4,6 +4,9 @@ from openai import OpenAI
 
 load_dotenv()
 
-openai_api_keys = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(api_key=openai_api_keys)
+if not openai_api_key:
+    raise RuntimeError("OPENAI_API_KEY is not set. Add it to your .env file before running Mosfet.")
+
+client = OpenAI(api_key=openai_api_key)

@@ -64,3 +64,5 @@ def call_function(name, args):
         return get_skill_content(**args)
     elif name == "browse_internet":
         return browse_internet(**args)
+    else:
+        return f"No tool available with name {name}."

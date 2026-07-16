@@ -2,8 +2,16 @@ from config import SKILLS_DIR
 from utils import build_skill_file, update_skills_index, get_skill_by_name
 
 def create_new_skill(name, description, content):
+    if not name or not name.strip():
+        return "Error: skill name must not be empty."
+    if not description or not description.strip():
+        return "Error: skill description must not be empty."
+    if not content or not content.strip():
+        return "Error: skill content must not be empty."
+
     name = name.lower().replace(" ", "_")
 
+    SKILLS_DIR.mkdir(parents=True, exist_ok=True)
     skill_path = SKILLS_DIR / f"{name}.md"
 
     with open(skill_path, "w") as file:
@@ -11,7 +19,10 @@ def create_new_skill(name, description, content):
         file.write(skill_file_content)
 
 def add_new_skill(name, description, content):
-    create_new_skill(name, description, content)
+    error = create_new_skill(name, description, content)
+    if error:
+        return error
+
     update_skills_index(name, description)
 
 def get_skill_content(name):
