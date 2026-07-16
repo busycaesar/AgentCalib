@@ -1,17 +1,27 @@
-from core import agent_run, messages
+import time
+
+from rich.console import Console
+from rich.panel import Panel
+from rich.markup import escape
+
+from core import parse_user_input, messages
 from config import BANNER, WELCOME_MESSAGE
 
 GOODBYE = "Goodbye!"
+INPUT_HINT = 'Try "refactor __init__.py"'
+
+console = Console()
 
 def run_chat():
-    print(BANNER)
-    print(WELCOME_MESSAGE)
+    console.print(BANNER, style="bold cyan")
+    console.print(WELCOME_MESSAGE)
+    console.print(Panel(INPUT_HINT, border_style="dim", expand=False))
 
     while True:
         try:
-            user_input = input("You: ")
+            user_input = console.input("[bold cyan]❯[/bold cyan] ")
         except (KeyboardInterrupt, EOFError):
-            print(f"\n{GOODBYE}")
+            console.print(f"\n{GOODBYE}")
             break
 
         user_input = user_input.strip()
@@ -20,13 +30,20 @@ def run_chat():
             continue
 
         if user_input.lower() in ("exit", "quit"):
-            print(GOODBYE)
+            console.print(GOODBYE)
             break
 
+        start_time = time.monotonic()
+
         try:
-            response = agent_run(messages, user_input)
+            with console.status("[dim]Thinking...[/dim]", spinner="dots"):
+                response = parse_user_input(messages, user_input)
         except Exception as error:
-            print(f"Error: {error}. Please try again.")
+            console.print(f"[red]Error:[/red] {escape(str(error))}. Please try again.")
             continue
 
-        print(f"Assistant: {response}")
+        elapsed = time.monotonic() - start_time
+
+        console.print(f"[bold cyan]●[/bold cyan] {escape(response)}")
+        console.print(f"[dim]✻ Brewed for {elapsed:.0f}s[/dim]")
+        console.print()
