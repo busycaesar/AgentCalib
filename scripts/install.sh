@@ -78,7 +78,9 @@ if [ ! -f "$ENV_FILE" ]; then
     read -r -s -p "OPENAI_API_KEY: " openai_api_key
     echo
     read -r -s -p "OPENAI_ORG_ID: " openai_org_id
+    echo
     read -r -s -p "OPENAI_PROJECT: " openai_project
+    echo
 
     # warn but don't fail the install
     [ -n "$openai_api_key" ] || echo "Warning: no API key entered. Edit $ENV_FILE before running mosfet."
