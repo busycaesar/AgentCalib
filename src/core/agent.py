@@ -1,11 +1,12 @@
-from config import client
+from config import client, model
 from .slash_command import get_skill_content
 from tools import tools, call_function
 import json
+from utils import clean_response
 
 def agent_ask(messages):
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model,
         messages=messages,
         tools=tools
     )
@@ -39,8 +40,9 @@ def agent_loop(messages):
         llm_message = agent_ask(messages)
         
         if not llm_message.tool_calls:
-            response = llm_message.content
+            response = clean_response(llm_message.content)
             break
+
         messages.append(llm_message)
         for tool_call in llm_message.tool_calls:
             function_name = tool_call.function.name
