@@ -19,7 +19,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 
 ## How it looks?
 
-<img width="650" height="528" alt="looks" src="https://github.com/user-attachments/assets/16c3fab9-3b53-4219-9589-7602ebb88e04" />
+<img width="611" height="528" alt="looks" src="https://github.com/user-attachments/assets/48a3bd6e-8c00-4440-b279-3384cc820fbf" />
 
 ## Features
 
