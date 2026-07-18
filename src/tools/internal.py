@@ -25,7 +25,9 @@ def add_new_skill(name, description, content):
 
     update_skills_index(name, description)
 
+# If the name of the following function is changed, make sure to update the name in core/build_initial_message.py as well.
 def get_skill_content(name):
+    print("Using Skill", name)
     content = get_skill_by_name(name)
 
     if not content:

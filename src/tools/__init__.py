@@ -14,8 +14,14 @@ tools = [
                         "type": "string",
                         "description": "A short, filesystem-safe identifier for the skill, used directly as the filename. Use snake_case, capped at 2 words, unless the user explicitly specifies a different name."
                     },
-                    "description": {"type": "string"},
-                    "content": { "type": "string" },
+                    "description": {
+                        "type": "string",
+                        "description": "A one-line summary of what the skill does and when to use it, shown in the skills index."
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "The full skill instructions in Markdown — the body the agent follows when the skill is invoked."
+                    },
                 },
                 "required": ["name", "description", "content"],
                 "additionalProperties": False,
