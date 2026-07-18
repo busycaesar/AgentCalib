@@ -1,10 +1,14 @@
-PROVIDER="Ollama" # OpenAI, Ollama
+PROVIDER="Anthropic" # OpenAI, Ollama, Anthropic
 
 """
-Ollama: gemma:2b
+Ollama: qwen3:1.7b
 OpenAI: gpt-4o-mini
+Anthropic: claude-opus-4-8
 """
-MODEL="qwen3:1.7b"
+MODEL="claude-opus-4-8"
 
 # For Ollama
 BASE_URL="http://localhost:11434/v1"
+
+# For Anthropic
+MAX_TOKENS=4096
