@@ -34,13 +34,13 @@ def parse_user_input(messages, user_input):
 
     return response
     
-
 def agent_loop(messages):
     while True:
         llm_message = agent_ask(messages)
         
         if not llm_message.tool_calls:
-            response = clean_response(llm_message.content)
+            content = llm_message.content or ""
+            response = clean_response(content)
             break
 
         messages.append(llm_message)
