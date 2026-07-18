@@ -1,17 +1,8 @@
-from config import client, model
+from adapters import llm
 from .slash_command import get_skill_content
 from tools import tools, call_function
 import json
 from utils import clean_response
-
-def agent_ask(messages):
-    completion = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        tools=tools
-    )
-
-    return completion.choices[0].message
 
 def parse_user_input(messages, user_input):
     try:
@@ -36,24 +27,25 @@ def parse_user_input(messages, user_input):
     
 def agent_loop(messages):
     while True:
-        llm_message = agent_ask(messages)
+        llm_message = llm.infer(messages, tools)
         
         if not llm_message.tool_calls:
             content = llm_message.content or ""
             response = clean_response(content)
             break
 
-        messages.append(llm_message)
+        messages.append(llm.format_llm_response(llm_message))
+
+        tool_call_results = []
+
         for tool_call in llm_message.tool_calls:
             function_name = tool_call.function.name
             function_arguments = json.loads(tool_call.function.arguments)
+            
             result = call_function(function_name, function_arguments)
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": json.dumps(result)
-                }
-            )
+
+            tool_call_results.append((tool_call.id, json.dumps(result)))
+
+        messages.extend(llm.format_tool_call_results(tool_call_results))
     
     return response
