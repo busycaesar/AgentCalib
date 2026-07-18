@@ -1,8 +1,5 @@
-from config import SKILLS_DIR
+from config import SKILLS_DIR, DELIMITER, SKILLS_INDEX_PATH
 import json
-
-DELIMITER = "---"
-SKILLS_INDEX_PATH = SKILLS_DIR / "index.json"
 
 def build_skill_file(description, content):
     return f"""\

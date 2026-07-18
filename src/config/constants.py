@@ -8,3 +8,7 @@ BANNER = """
 """
 
 WELCOME_MESSAGE = "Welcome to Mosfet! Type 'exit' or 'quit' to leave."
+
+GOODBYE_MESSAGE = "Entering cutoff. Goodbye!"
+
+DELIMITER = "---"

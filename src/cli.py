@@ -2,13 +2,11 @@ import time
 from rich.console import Console
 from rich.markup import escape
 from core import parse_user_input, messages
-from config import BANNER, WELCOME_MESSAGE
-
-GOODBYE = "Entering cutoff. Goodbye!"
+from config import BANNER, WELCOME_MESSAGE, GOODBYE_MESSAGE
 
 console = Console()
 
-def run_chat():
+def run_cli_chat():
     console.print(BANNER, style="bold #fa6800")
     console.print(WELCOME_MESSAGE)
 
@@ -17,7 +15,7 @@ def run_chat():
             console.print()
             user_input = console.input("[bold #fa6800]❯[/bold #fa6800] ")
         except (KeyboardInterrupt, EOFError):
-            console.print(f"\n{GOODBYE}")
+            console.print(f"\n{GOODBYE_MESSAGE}")
             break
 
         user_input = user_input.strip()
@@ -27,7 +25,7 @@ def run_chat():
 
         if user_input.lower() in ("exit", "quit"):
             console.print()
-            console.print(GOODBYE)
+            console.print(GOODBYE_MESSAGE)
             break
 
         start_time = time.monotonic()

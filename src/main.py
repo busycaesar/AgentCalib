@@ -1,4 +1,7 @@
-from chat import run_chat
+from cli import run_cli_chat
+
+UI = "CLI" # Web
 
 if __name__ == "__main__":
-    run_chat()
+    if UI == "CLI":
+        run_cli_chat()
