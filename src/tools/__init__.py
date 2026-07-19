@@ -1,4 +1,4 @@
-from .internal import add_new_skill, browse_internet, get_skill_content
+from .internal import add_new_skill, web_search_tool, get_skill_content, fetch_content_from_url
 
 # The list of tools and required arguments, to assist the LLM.
 tools = [
@@ -48,14 +48,30 @@ tools = [
     {
         "type": "function",
         "function": {
-            "name": "browse_internet",
-            "description": "Browse the internet to get the latest and updated information to be able to better serve the user.",
+            "name": "web_search_tool",
+            "description": "Search the web for a query and get back page titles, URLs, and short snippets. Use this to find sources before fetching their full content.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "query": {"type": "string"}
+                    "query": {"type": "string", "description": "The search query."}
                 },
                 "required": ["query"],
+                "additionalProperties": False,
+            },
+            "strict": True
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "fetch_content_from_url",
+            "description": "Fetch and read the content of a specific URL, typically one found via the web search tool. Returns the page's main content as clean text.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "url": {"type": "string", "description": "The URL to fetch."} 
+                },
+                "required": ["url"],
                 "additionalProperties": False,
             },
             "strict": True
@@ -68,7 +84,9 @@ def call_function(name, args):
         return add_new_skill(**args)
     elif name == "get_skill_content":
         return get_skill_content(**args)
-    elif name == "browse_internet":
-        return browse_internet(**args)
+    elif name == "web_search_tool":
+        return web_search_tool(**args)
+    elif name == "fetch_content_from_url":
+        return fetch_content_from_url(**args)
     else:
         return f"No tool available with name {name}."

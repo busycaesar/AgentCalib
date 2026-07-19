@@ -1,5 +1,7 @@
 from config import SKILLS_DIR
 from utils import build_skill_file, update_skills_index, get_skill_by_name
+from adapters import web_search
+import trafilatura
 
 def create_new_skill(name, description, content):
     if not name or not name.strip():
@@ -34,5 +36,18 @@ def get_skill_content(name):
     
     return content
 
-def browse_internet(query):
-    return "Result"
+def web_search_tool(query):
+    return web_search.search(query)
+
+def fetch_content_from_url(url):
+    downloaded = trafilatura.fetch_url(url)
+
+    if downloaded is None:
+        return f"Could not fetch content from {url}."
+    
+    content = trafilatura.extract(downloaded)
+
+    if not content:
+        return f"No readable content found at {url}."
+
+    return content
