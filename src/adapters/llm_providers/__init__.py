@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from config import PROVIDER, BASE_URL, MODEL, MAX_TOKENS
 from .anthropic import AnthropicLLM
+from .ollama import OllamaLLM
+from .openai import OpenAILLM
 
 load_dotenv()
 
@@ -13,5 +15,17 @@ if PROVIDER == "Anthropic":
         raise RuntimeError("ANTHROPIC_API_KEY is not set. Set it in .env before running Mosfet.")
     
     llm = AnthropicLLM(api_key, MODEL, MAX_TOKENS)
+elif PROVIDER == "Ollama":
+    if not BASE_URL:
+        raise RuntimeError("BASE_URL is not set for Ollama. Set it in /src/config/provider before running Mosfet.")
+    
+    llm = OllamaLLM(BASE_URL, MODEL)
+elif PROVIDER == "OpenAI":
+    api_key = os.getenv("OPENAI_API_KEY")
+
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY is not set. Set it in .env before running Mosfet.")
+    
+    llm = OpenAILLM(api_key, MODEL)
 else:
     raise RuntimeError(f"No adapter implemented yet for PROVIDER '{PROVIDER}'.")
