@@ -1,6 +1,6 @@
 LLM_PROVIDER="OpenAI" # OpenAI, Ollama, Anthropic
 # Defaults to DDG if not customized or set because it does not need any API. This ensures that the agent still has web search capability regardless.
-WEB_SEARCH_PROVIDER="DuckDuckGo" # DuckDuckGo, Brave
+WEB_SEARCH_PROVIDER="Brave" # DuckDuckGo, Brave
 
 """
 Ollama: qwen3:1.7b

@@ -37,9 +37,11 @@ def get_skill_content(name):
     return content
 
 def web_search_tool(query):
+    print("using web search tool.")
     return web_search.search(query)
 
 def fetch_content_from_url(url):
+    print("using fetch content from url tool.")
     downloaded = trafilatura.fetch_url(url)
 
     if downloaded is None:
