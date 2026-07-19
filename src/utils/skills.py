@@ -1,4 +1,4 @@
-from config import SKILLS_DIR, DELIMITER, SKILLS_INDEX_PATH
+from config import SKILLS_PATH, DELIMITER, SKILLS_INDEX_PATH
 import json
 
 def build_skill_file(description, content):
@@ -25,7 +25,7 @@ def get_skills_list():
         raise RuntimeError(f"Skills index at {SKILLS_INDEX_PATH} is corrupted: {error}") from error
 
 def get_skill_by_name(name):
-    skill_path = SKILLS_DIR / f"{name}.md"
+    skill_path = SKILLS_PATH / f"{name}.md"
 
     if not skill_path.is_file():
         return None
