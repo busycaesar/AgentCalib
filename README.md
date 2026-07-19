@@ -41,7 +41,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
  ├── main.py     # Entry point
  ├── cli.py      # Interactive terminal chat loop
  ├── core/       # Agent loop and skill/tool orchestration
- ├── adapters/   # Per-provider LLM adapters behind a common interface
+ ├── adapters/   # Per-provider LLM and web-search adapters behind common interfaces
  ├── config/     # Provider selection, seed messages, and shared paths
  ├── tools/      # Tool schemas and implementations available to the agent
  ├── utils/      # Shared helpers used across the codebase
@@ -72,9 +72,9 @@ mosfet
    pip install -r req.txt
    ```
 
-2. Pick your provider and model in `src/config/provider.py` (`OpenAI`, `Ollama`, or `Anthropic`, plus `MODEL` and, depending on the provider, `BASE_URL` or `MAX_TOKENS`).
+2. Copy `mosfet.config.example.json` to `mosfet.config.json` at the project root, and set `LLM_PROVIDER` (`OpenAI`, `Ollama`, or `Anthropic`), `MODEL`, and `WEB_SEARCH_PROVIDER` (`DuckDuckGo`, which needs no key, or `Brave`). Rarely-changed settings like Ollama's server URL or Anthropic's response length cap live in `src/config/advanced_providers.py` if you ever need to adjust them.
 
-3. Copy the credentials for your chosen provider into a `.env` file at the project root (Ollama needs none):
+3. Copy the credentials for your chosen provider(s) into a `.env` file at the project root (Ollama and DuckDuckGo need none):
 
    ```text
    OPENAI_API_KEY="..."
@@ -82,6 +82,8 @@ mosfet
    OPENAI_PROJECT="..."
 
    ANTHROPIC_API_KEY="..."
+
+   BRAVE_API_KEY="..."
    ```
 
 4. Run the agent:
