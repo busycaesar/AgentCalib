@@ -78,8 +78,6 @@ mosfet
 
    ```text
    OPENAI_API_KEY="..."
-   OPENAI_ORG_ID="..."
-   OPENAI_PROJECT="..."
 
    ANTHROPIC_API_KEY="..."
 
