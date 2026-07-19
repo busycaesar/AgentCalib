@@ -1,4 +1,4 @@
-from config import SKILLS_DIR
+from config import SKILLS_PATH
 from utils import build_skill_file, update_skills_index, get_skill_by_name
 from adapters import web_search
 import trafilatura
@@ -13,8 +13,8 @@ def create_new_skill(name, description, content):
 
     name = name.lower().replace(" ", "_")
 
-    SKILLS_DIR.mkdir(parents=True, exist_ok=True)
-    skill_path = SKILLS_DIR / f"{name}.md"
+    SKILLS_PATH.mkdir(parents=True, exist_ok=True)
+    skill_path = SKILLS_PATH / f"{name}.md"
 
     with open(skill_path, "w") as file:
         skill_file_content = build_skill_file(description, content)
@@ -37,11 +37,9 @@ def get_skill_content(name):
     return content
 
 def web_search_tool(query):
-    print("using web search tool.")
     return web_search.search(query)
 
 def fetch_content_from_url(url):
-    print("using fetch content from url tool.")
     downloaded = trafilatura.fetch_url(url)
 
     if downloaded is None:

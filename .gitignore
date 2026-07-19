@@ -3,6 +3,9 @@ src/skills/
 __pycache__/
 docs/
 
+# per-installation Mosfet config (see mosfet.config.example.json)
+mosfet.config.json
+
 # Logs
 logs
 *.log
