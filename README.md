@@ -29,6 +29,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 - Bring a saved skill into a conversation whenever you need it
 - The agent knows which skills it has available and can recognize on its own when one applies, loading it without you having to ask
 - The agent can work through multiple steps on its own before giving you a final answer
+- The agent can search the web and read pages to answer questions that need current or specific information
 - Point the agent at whichever LLM provider and model you want, hosted or local
 - Install once and run the agent from anywhere on your machine
 
