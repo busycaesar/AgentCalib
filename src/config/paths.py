@@ -1,6 +1,6 @@
 from pathlib import Path
 
-SKILLS_DIR = "skills"
+SKILLS_DIR = "extensions/skills"
 SKILLS_INDEX_FILE = "index.json"
 CONFIG_FILE = "mosfet.config.json"
 

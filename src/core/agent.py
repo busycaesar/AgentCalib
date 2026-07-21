@@ -1,6 +1,6 @@
 from adapters import llm
 from .slash_command import get_skill_content
-from tools import tools, call_function
+from extensions import tools, call_function
 import json
 from utils import clean_response
 
