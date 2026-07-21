@@ -48,6 +48,9 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
  ├── extensions/ # Tools (and eventually skills/MCP) available to the agent
  │    ├── skills/
  │    └── tools/
+ │         ├── __init__.py      # Tool definitions and function calls
+ │         ├── internal.py       # Internal tool functionality
+ │         └── tools_definition.py # Tool metadata and parameters
  └── utils/      # Shared helpers used across the codebase
  scripts/
  └── install.sh # Installs Mosfet into ~/.mosfet and adds `mosfet` to PATH
