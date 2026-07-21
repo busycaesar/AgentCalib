@@ -20,26 +20,25 @@ def create_new_skill(name, description, content):
         skill_file_content = build_skill_file(description, content)
         file.write(skill_file_content)
 
-def add_new_skill(name, description, content):
+def int_add_new_skill(name, description, content):
     error = create_new_skill(name, description, content)
     if error:
         return error
 
     update_skills_index(name, description)
 
-# If the name of the following function is changed, make sure to update the name in core/build_initial_message.py as well.
-def get_skill_content(name):
+def int_get_skill_content(name):
     content = get_skill_by_name(name)
 
     if not content:
         return f"No skill available with name {name}."
-    
+
     return content
 
-def web_search_tool(query):
+def int_web_search_tool(query):
     return web_search.search(query)
 
-def fetch_content_from_url(url):
+def int_fetch_content_from_url(url):
     downloaded = trafilatura.fetch_url(url)
 
     if downloaded is None:
@@ -51,3 +50,15 @@ def fetch_content_from_url(url):
         return f"No readable content found at {url}."
 
     return content
+
+def call_function(name, args):
+    if name == "int_add_new_skill":
+        return int_add_new_skill(**args)
+    elif name == "int_get_skill_content":
+        return int_get_skill_content(**args)
+    elif name == "int_web_search_tool":
+        return int_web_search_tool(**args)
+    elif name == "int_fetch_content_from_url":
+        return int_fetch_content_from_url(**args)
+    else:
+        return f"No tool available with name {name}."
