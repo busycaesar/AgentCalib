@@ -1,8 +1,6 @@
 import discord
 from core import parse_user_input, messages
-from config import GOODBYE_MESSAGE, DISCORD_BOT_TOKEN, DISCORD_ALLOWED_USER_ID
-
-DISCORD_MESSAGE_LIMIT = 2000
+from config import GOODBYE_MESSAGE, DISCORD_BOT_TOKEN, DISCORD_ALLOWED_USER_ID, DISCORD_MESSAGE_LIMIT
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -10,6 +8,10 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 async def send_long_message(channel, text):
+    """
+    Discord throws error for messages beyond 2000 characters.
+    Hence breaking the long messages beyond 2000 characters into multiple messages.
+    """
     for i in range(0, len(text), DISCORD_MESSAGE_LIMIT):
         await channel.send(text[i:i + DISCORD_MESSAGE_LIMIT])
 
@@ -19,13 +21,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    # Ensure that it does not reply to itself.
     if message.author == client.user:
         return
 
+    # Ensure only direct messages are allowed.
     if not isinstance(message.channel, discord.DMChannel):
-        return
-
-    if str(message.author.id) != DISCORD_ALLOWED_USER_ID:
         return
 
     if message.content.strip().lower() in ("exit", "quit"):
