@@ -1,13 +1,6 @@
-import os
 import discord
-from dotenv import load_dotenv
 from core import parse_user_input, messages
-from config import GOODBYE_MESSAGE
-
-load_dotenv()
-
-DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
-DISCORD_ALLOWED_USER_ID = os.getenv("DISCORD_ALLOWED_USER_ID")
+from config import GOODBYE_MESSAGE, DISCORD_BOT_TOKEN, DISCORD_ALLOWED_USER_ID
 
 DISCORD_MESSAGE_LIMIT = 2000
 
