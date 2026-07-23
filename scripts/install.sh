@@ -9,7 +9,6 @@ set -euo pipefail
 # =============================================================================
 
 REPO_URL="https://github.com/busycaesar/Mosfet.git"
-BRANCH="Master"
 INSTALL_DIR="$HOME/.mosfet"
 VENV_DIR="$INSTALL_DIR/.venv"
 BIN_DIR="$HOME/.local/bin"
@@ -32,25 +31,36 @@ command -v git >/dev/null 2>&1 || err "git is required but not installed."
 command -v python3 >/dev/null 2>&1 || err "python3 is required but not installed."
 
 # =============================================================================
-# Phase 3: Clone or update the repository
+# Phase 3: Clone or update the repository (always the latest release tag)
 # =============================================================================
+
+# Latest release = highest vX.Y.Z git tag, not whatever HEAD of a branch
+# happens to be — keeps installs pinned to tagged releases only.
+LATEST_TAG="$(git ls-remote --tags --refs "$REPO_URL" | awk '{print $2}' | sed 's#refs/tags/##' | sort -V | tail -n1)"
+[ -n "$LATEST_TAG" ] || err "No release tags found in $REPO_URL."
 
 if [ -d "$INSTALL_DIR/.git" ]; then
     # Already a git repo: make sure it's actually our repo, then update it.
     origin_url="$(git -C "$INSTALL_DIR" remote get-url origin)"
     [ "$origin_url" = "$REPO_URL" ] || err "$INSTALL_DIR exists and is not a Mosfet clone (origin: $origin_url)."
 
-    echo "Updating existing installation..."
+    current_tag="$(git -C "$INSTALL_DIR" describe --tags --exact-match 2>/dev/null || true)"
+    if [ "$current_tag" = "$LATEST_TAG" ]; then
+        echo "Already on latest release ($LATEST_TAG)."
+    else
+        echo "Updating to $LATEST_TAG..."
 
-    git -C "$INSTALL_DIR" pull --ff-only origin "$BRANCH"
+        git -C "$INSTALL_DIR" fetch --tags origin
+        git -C "$INSTALL_DIR" checkout "$LATEST_TAG"
+    fi
 elif [ -e "$INSTALL_DIR" ]; then
     # Path exists but isn't a git repo: refuse to touch it.
     err "$INSTALL_DIR already exists and is not a git repository. Remove it and re-run this script."
 else
-    # Fresh install: clone the repo for the first time.
-    echo "Cloning Mosfet into $INSTALL_DIR..."
+    # Fresh install: clone the latest release tag.
+    echo "Cloning Mosfet $LATEST_TAG into $INSTALL_DIR..."
 
-    git clone --branch "$BRANCH" "$REPO_URL" "$INSTALL_DIR"
+    git clone --branch "$LATEST_TAG" "$REPO_URL" "$INSTALL_DIR"
 fi
 
 # =============================================================================
