@@ -14,7 +14,6 @@ INSTALL_DIR="$HOME/.mosfet"
 VENV_DIR="$INSTALL_DIR/.venv"
 BIN_DIR="$HOME/.local/bin"
 LAUNCHER="$BIN_DIR/mosfet"
-ENV_FILE="$INSTALL_DIR/.env"
 
 # =============================================================================
 # Phase 1: Helper functions
@@ -67,40 +66,14 @@ echo "Setting up Python virtual environment..."
 "$VENV_DIR/bin/pip" install -r "$INSTALL_DIR/req.txt" -q
 
 # =============================================================================
-# Phase 5: Credentials setup (.env)
+# Phase 5: Provider and credentials setup (mosfet.config.json + .env)
 # =============================================================================
 
-# No .env yet: prompt the user for their OpenAI credentials.
-if [ ! -f "$ENV_FILE" ]; then
-    echo
-    echo "Enter your OpenAI credentials"
-    # -s hides input (secret), -r avoids backslash escaping
-    read -r -s -p "OPENAI_API_KEY: " openai_api_key
-    echo
-    read -r -s -p "OPENAI_ORG_ID: " openai_org_id
-    echo
-    read -r -s -p "OPENAI_PROJECT: " openai_project
-    echo
-
-    # warn but don't fail the install
-    [ -n "$openai_api_key" ] || echo "Warning: no API key entered. Edit $ENV_FILE before running mosfet."
-
-    # store the secrects in .env file.
-    cat > "$ENV_FILE" <<EOF
-OPENAI_API_KEY="$openai_api_key"
-OPENAI_ORG_ID="$openai_org_id"
-OPENAI_PROJECT="$openai_project"
-EOF
-
-    # restrict permissions since the file holds secrets
-    chmod 600 "$ENV_FILE"
-else
-    # .env already present: don't overwrite existing credentials.
-    echo ".env already exists, skipping credential prompt."
-
-    # warn if the existing .env is missing the required API key
-    grep -qE '^OPENAI_API_KEY="[^"]+"' "$ENV_FILE" || echo "Warning: OPENAI_API_KEY is missing or empty in $ENV_FILE. Edit it before running mosfet."
-fi
+# Interactive arrow-key selection (same pattern as Claude Code's own setup
+# prompts) — handled by a Python helper since it's far more robust than
+# hand-rolling terminal escape-sequence handling in bash, and python3 is
+# already a hard prerequisite of this script.
+"$VENV_DIR/bin/python3" "$INSTALL_DIR/scripts/setup_provider.py"
 
 # =============================================================================
 # Phase 6: Launcher installation
