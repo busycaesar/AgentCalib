@@ -60,7 +60,7 @@ def setup_config():
 
     web_search_provider = questionary.select(
         "Which web search provider would you like to use?",
-        choices=["DuckDuckGo", "Brave", SKIP],
+        choices=["DuckDuckGo (Free)", "Brave", SKIP],
     ).ask()
 
     if web_search_provider and web_search_provider != SKIP:
