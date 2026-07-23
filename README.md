@@ -75,19 +75,26 @@ mosfet
    pip install -r req.txt
    ```
 
-2. Copy `mosfet.config.example.json` to `mosfet.config.json` at the project root, and set `LLM_PROVIDER` (`OpenAI`, `Ollama`, or `Anthropic`), `MODEL`, and `WEB_SEARCH_PROVIDER` (`DuckDuckGo`, which needs no key, or `Brave`). Rarely-changed settings like Ollama's server URL or Anthropic's response length cap live in `src/config/advanced_providers.py` if you ever need to adjust them.
+2. Set up your provider and credentials — either interactively:
 
-3. Copy the credentials for your chosen provider(s) into a `.env` file at the project root (Ollama and DuckDuckGo need none):
-
-   ```text
-   OPENAI_API_KEY="..."
-
-   ANTHROPIC_API_KEY="..."
-
-   BRAVE_API_KEY="..."
+   ```bash
+   python3 scripts/setup_provider.py
    ```
 
-4. Run the agent:
+   which creates both `mosfet.config.json` and `.env` for you, or by hand:
+
+   - Copy `mosfet.config.example.json` to `mosfet.config.json` at the project root, and set `LLM_PROVIDER` (`OpenAI`, `Ollama`, or `Anthropic`), `MODEL`, and `WEB_SEARCH_PROVIDER` (`DuckDuckGo`, which needs no key, or `Brave`). Rarely-changed settings like Ollama's server URL or Anthropic's response length cap live in `src/config/advanced_providers.py` if you ever need to adjust them.
+   - Copy the credentials for your chosen provider(s) into a `.env` file at the project root (Ollama and DuckDuckGo need none):
+
+     ```text
+     OPENAI_API_KEY="..."
+
+     ANTHROPIC_API_KEY="..."
+
+     BRAVE_API_KEY="..."
+     ```
+
+3. Run the agent:
 
    ```bash
    python src/main.py
