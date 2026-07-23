@@ -1,6 +1,6 @@
 import discord
 from core import parse_user_input, messages
-from config import GOODBYE_MESSAGE, DISCORD_BOT_TOKEN, DISCORD_ALLOWED_USER_ID, DISCORD_MESSAGE_LIMIT
+from config import GOODBYE_MESSAGE, DISCORD_BOT_TOKEN, DISCORD_MESSAGE_LIMIT
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -46,8 +46,5 @@ async def on_message(message):
 def run_discord_chat():
     if not DISCORD_BOT_TOKEN:
         raise RuntimeError("DISCORD_BOT_TOKEN is not set. Add it to your .env file before running Mosfet.")
-
-    if not DISCORD_ALLOWED_USER_ID:
-        raise RuntimeError("DISCORD_ALLOWED_USER_ID is not set. Add your Discord user ID to your .env file before running Mosfet.")
 
     client.run(DISCORD_BOT_TOKEN)
