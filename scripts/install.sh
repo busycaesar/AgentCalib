@@ -73,7 +73,16 @@ echo "Setting up Python virtual environment..."
 # prompts) — handled by a Python helper since it's far more robust than
 # hand-rolling terminal escape-sequence handling in bash, and python3 is
 # already a hard prerequisite of this script.
-"$VENV_DIR/bin/python3" "$INSTALL_DIR/scripts/setup_provider.py"
+#
+# Piping this script via `curl | bash` consumes stdin to read the script
+# itself, so the prompts must read from the controlling terminal directly
+# instead of inherited stdin.
+if [ -r /dev/tty ]; then
+    "$VENV_DIR/bin/python3" "$INSTALL_DIR/scripts/setup_provider.py" < /dev/tty
+else
+    echo "No interactive terminal detected — skipping provider setup."
+    echo "Run 'python3 $INSTALL_DIR/scripts/setup_provider.py' later to configure Mosfet."
+fi
 
 # =============================================================================
 # Phase 6: Launcher installation
