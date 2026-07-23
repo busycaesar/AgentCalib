@@ -1,7 +1,12 @@
-# Mosfet
-
-<img width="1000" height="250" alt="mosfet" src="https://github.com/user-attachments/assets/665d93f4-fe6d-4e2c-8195-67a266f7e244" />
-
+<pre>
+███╗   ███╗ ██████╗ ███████╗███████╗███████╗████████╗
+████╗ ████║██╔═══██╗██╔════╝██╔════╝██╔════╝╚══██╔══╝
+██╔████╔██║██║   ██║███████╗█████╗  █████╗     ██║
+██║╚██╔╝██║██║   ██║╚════██║██╔══╝  ██╔══╝     ██║
+██║ ╚═╝ ██║╚██████╔╝███████║██║     ███████╗   ██║
+╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝     ╚══════╝   ╚═╝
+</pre>
+ 
 ## Description
 
 Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
@@ -20,7 +25,11 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 
 ## How it looks?
 
+### CLI
 <img width="858" height="655" alt="looks" src="https://github.com/user-attachments/assets/c7d9209f-0587-4014-b399-63b220910920" />
+
+### Discord
+<img width="812" height="925" alt="discord" src="https://github.com/user-attachments/assets/8452443c-f662-4bcf-8e72-fe919f6cf7d3" />
 
 ## Features
 
