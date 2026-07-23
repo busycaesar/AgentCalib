@@ -102,7 +102,7 @@ echo "Installing launcher to $LAUNCHER..."
 mkdir -p "$BIN_DIR"  # ensure the target bin directory exists
 cat > "$LAUNCHER" <<EOF
 #!/usr/bin/env bash
-exec "$VENV_DIR/bin/python" "$INSTALL_DIR/src/main.py"
+exec "$VENV_DIR/bin/python" "$INSTALL_DIR/src/main.py" "\$@"
 EOF
 chmod +x "$LAUNCHER"  # make the launcher executable
 
