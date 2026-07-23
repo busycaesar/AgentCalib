@@ -58,10 +58,10 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 ### Option 1: Install script
 
 ```bash
-curl -fsSL https://mosfet.shahtech.info | bash
+bash <(curl -fsSL https://mosfet.shahtech.info)
 ```
 
-This clones Mosfet, sets up an isolated Python environment, prompts for your OpenAI credentials, and installs a `mosfet` command on your `PATH`. Once it finishes, run the agent from anywhere:
+This clones the latest Mosfet release, sets up an isolated Python environment, prompts you to pick an LLM provider and web search provider (with credentials for whichever you choose), and installs a `mosfet` command on your `PATH`. Once it finishes, run the agent from anywhere:
 
 ```bash
 mosfet
