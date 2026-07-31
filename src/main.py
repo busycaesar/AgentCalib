@@ -1,21 +1,21 @@
 import argparse
-from ui import run_cli_chat, run_discord_chat
 
-UI = "CLI" # CLI, Web, Discord
+from config_setup import run_config
+from communications import add_communications_arguments, run_communications
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run Mosfet with the given interface.")
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--cli", action="store_const", dest="ui", const="CLI")
-    group.add_argument("--discord", action="store_const", dest="ui", const="Discord")
-    parser.set_defaults(ui=UI)
+    subparsers = parser.add_subparsers(dest="command")
+    subparsers.add_parser("config", help="Create or update mosfet.config.json and .env")
+
+    add_communications_arguments(parser)
 
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse_args()
 
-    if args.ui == "CLI":
-        run_cli_chat()
-    elif args.ui == "Discord":
-        run_discord_chat()
+    if args.command == "config":
+        run_config()
+    else:
+        run_communications(args)
