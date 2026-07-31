@@ -7,7 +7,6 @@ COPY req.txt .
 RUN pip install --no-cache-dir -r req.txt
 
 COPY src/ src/
-COPY mosfet.config.example.json .
 
 RUN useradd --create-home --shell /usr/sbin/nologin mosfet \
     && chown -R mosfet:mosfet /app
