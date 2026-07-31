@@ -34,12 +34,14 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 ## Features
 
 - Chat with the agent right from your terminal
+- Chat with the agent through direct messages on Discord
 - Ask the agent to create a new skill, and it will save one for later use
 - Bring a saved skill into a conversation whenever you need it
 - The agent knows which skills it has available and can recognize on its own when one applies, loading it without you having to ask
 - The agent can work through multiple steps on its own before giving you a final answer
 - The agent can search the web and read pages to answer questions that need current or specific information
 - Point the agent at whichever LLM provider and model you want, hosted or local
+- Set up or change your provider, model, and credentials anytime through a short guided prompt
 - Install once and run the agent from anywhere on your machine
 
 ## Project Structure
@@ -47,8 +49,9 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 ```text
 .
  src/
- ├── main.py     # Entry point
- ├── cli.py      # Interactive terminal chat loop
+ ├── main.py            # Entry point
+ ├── config_setup.py    # Guided setup/update for provider config and credentials
+ ├── communications.py  # Picks and launches the configured front-end
  ├── core/       # Agent loop and skill/tool orchestration
  ├── adapters/   # Per-provider LLM and web-search adapters behind common interfaces
  │    ├── llm_providers/
@@ -57,6 +60,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
  ├── extensions/ # Tools (and eventually skills/MCP) available to the agent
  │    ├── skills/
  │    └── tools/
+ ├── ui/         # Front-ends: terminal chat loop and Discord bot
  └── utils/      # Shared helpers used across the codebase
  scripts/
  └── install.sh # Installs Mosfet into ~/.mosfet and adds `mosfet` to PATH
@@ -70,9 +74,10 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 bash <(curl -fsSL https://mosfet.shahtech.info)
 ```
 
-This clones the latest Mosfet release, sets up an isolated Python environment, prompts you to pick an LLM provider and web search provider (with credentials for whichever you choose), and installs a `mosfet` command on your `PATH`. Once it finishes, run the agent from anywhere:
+This clones the latest Mosfet release, sets up an isolated Python environment, and installs a `mosfet` command on your `PATH`. Once it finishes, set up your provider and credentials, then start chatting:
 
 ```bash
+mosfet config
 mosfet
 ```
 
@@ -84,24 +89,13 @@ mosfet
    pip install -r req.txt
    ```
 
-2. Set up your provider and credentials — either interactively:
+2. Set up your provider and credentials:
 
    ```bash
-   python3 scripts/setup_provider.py
+   python3 src/main.py config
    ```
 
-   which creates both `mosfet.config.json` and `.env` for you, or by hand:
-
-   - Copy `mosfet.config.example.json` to `mosfet.config.json` at the project root, and set `LLM_PROVIDER` (`OpenAI`, `Ollama`, or `Anthropic`), `MODEL`, and `WEB_SEARCH_PROVIDER` (`DuckDuckGo`, which needs no key, or `Brave`). Rarely-changed settings like Ollama's server URL or Anthropic's response length cap live in `src/config/advanced_providers.py` if you ever need to adjust them.
-   - Copy the credentials for your chosen provider(s) into a `.env` file at the project root (Ollama and DuckDuckGo need none):
-
-     ```text
-     OPENAI_API_KEY="..."
-
-     ANTHROPIC_API_KEY="..."
-
-     BRAVE_API_KEY="..."
-     ```
+   This walks you through picking an LLM provider, model, and web search provider, and prompts for whichever credentials you need — writing `mosfet.config.json` and `.env` for you. Run it again anytime to change your setup. Rarely-changed settings like Ollama's server URL or Anthropic's response length cap live in `src/config/advanced_providers.py` if you ever need to adjust them.
 
 3. Run the agent:
 
