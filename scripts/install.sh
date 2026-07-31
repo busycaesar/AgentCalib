@@ -76,26 +76,7 @@ echo "Setting up Python virtual environment..."
 "$VENV_DIR/bin/pip" install -r "$INSTALL_DIR/req.txt" -q
 
 # =============================================================================
-# Phase 5: Provider and credentials setup (mosfet.config.json + .env)
-# =============================================================================
-
-# Interactive arrow-key selection (same pattern as Claude Code's own setup
-# prompts) — handled by a Python helper since it's far more robust than
-# hand-rolling terminal escape-sequence handling in bash, and python3 is
-# already a hard prerequisite of this script.
-#
-# Piping this script via `curl | bash` consumes stdin to read the script
-# itself, so the prompts must read from the controlling terminal directly
-# instead of inherited stdin.
-if [ -r /dev/tty ]; then
-    "$VENV_DIR/bin/python3" "$INSTALL_DIR/scripts/setup_provider.py" < /dev/tty
-else
-    echo "No interactive terminal detected — skipping provider setup."
-    echo "Run 'python3 $INSTALL_DIR/scripts/setup_provider.py' later to configure Mosfet."
-fi
-
-# =============================================================================
-# Phase 6: Launcher installation
+# Phase 5: Launcher installation
 # =============================================================================
 
 echo "Installing launcher to $LAUNCHER..."
@@ -110,7 +91,7 @@ echo
 echo "Mosfet installed successfully."
 
 # =============================================================================
-# Phase 7: PATH check
+# Phase 6: PATH check
 # =============================================================================
 
 case ":$PATH:" in
@@ -125,7 +106,7 @@ case ":$PATH:" in
 esac
 
 # =============================================================================
-# Phase 8: Done
+# Phase 7: Done
 # =============================================================================
 
 echo
