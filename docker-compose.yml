@@ -1,0 +1,7 @@
+services:
+  mosfet-app:
+    image: busycaesar/mosfet:beta
+    volumes:
+      - ./mosfet.config.json:/app/mosfet.config.json
+    env_file:
+      - .env

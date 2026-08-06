@@ -8,15 +8,14 @@ RUN pip install --no-cache-dir -r req.txt
 
 COPY src/ src/
 
+RUN printf '#!/usr/bin/env bash\nexec python /app/src/main.py "$@"\n' > /usr/local/bin/mosfet \
+    && chmod +x /usr/local/bin/mosfet
+
 RUN useradd --create-home --shell /usr/sbin/nologin mosfet \
     && chown -R mosfet:mosfet /app
 USER mosfet
 
 ENV PYTHONUNBUFFERED=1
 
-# mosfet.config.json and .env are runtime configuration/secrets, not part of
-# the image — mount them in with `-v` / `--env-file` (see README).
-#
-# Defaults to CLI mode (main.py's default); pass `--discord` as an extra
-# `docker run` argument to run the Discord bot instead.
-ENTRYPOINT ["python", "src/main.py"]
+# Idles by default. Nothing runs until you exec in and invoke `mosfet` yourself (e.g. `docker exec -it <container> mosfet`), same as the installed app does nothing until you run `mosfet`.
+ENTRYPOINT ["sleep", "infinity"]
