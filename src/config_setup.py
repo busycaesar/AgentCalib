@@ -8,7 +8,7 @@ import json
 
 import questionary
 from questionary import Choice
-from dotenv import set_key, dotenv_values
+from dotenv import dotenv_values
 
 from config.paths import CONFIG_PATH, ENV_PATH, ENV_EXAMPLE_PATH
 from config.providers import DEFAULT_LLM_PROVIDER, DEFAULT_WEB_SEARCH_PROVIDER, DEFAULT_MODELS
@@ -46,6 +46,25 @@ CHANNEL_API_KEY_ENV = {
 _pending_warnings = []
 
 
+def write_env_key(env_key, value):
+    """Update (or append) a single KEY="value" line in .env with a plain
+    in-place write — not dotenv's set_key(), which writes via a temp file
+    + atomic rename. That rename fails with EBUSY when .env is a Docker
+    bind-mounted file, since you can't replace the inode a bind mount points
+    at."""
+    lines = ENV_PATH.read_text().splitlines() if ENV_PATH.is_file() else []
+    new_line = f'{env_key}="{value}"'
+
+    for i, line in enumerate(lines):
+        if line.startswith(f"{env_key}="):
+            lines[i] = new_line
+            break
+    else:
+        lines.append(new_line)
+
+    ENV_PATH.write_text("\n".join(lines) + "\n")
+
+
 def prompt_credential(env_key):
     """Prompt for a single .env credential, but only if it isn't already set —
     an existing value is left untouched with no prompt. Blank input queues a
@@ -64,7 +83,7 @@ def prompt_credential(env_key):
         _pending_warnings.append(f"{env_key} is not set. The app won't work until you set it in {ENV_PATH}.")
         return
 
-    set_key(str(ENV_PATH), env_key, value)
+    write_env_key(env_key, value)
 
 
 def print_pending_warnings():
@@ -200,7 +219,7 @@ def update_config():
 
 
 def run_config():
-    if CONFIG_PATH.is_file():
+    if CONFIG_PATH.is_file() and CONFIG_PATH.read_text().strip():
         update_config()
     else:
         setup_config()

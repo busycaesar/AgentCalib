@@ -3,5 +3,4 @@ services:
     image: busycaesar/mosfet:beta
     volumes:
       - ./mosfet.config.json:/app/mosfet.config.json
-    env_file:
-      - .env
+      - ./.env:/app/.env

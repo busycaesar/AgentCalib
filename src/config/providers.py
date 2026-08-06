@@ -4,7 +4,9 @@ from .paths import CONFIG_PATH
 config = {}
 
 if CONFIG_PATH.is_file():
-    config = json.loads(CONFIG_PATH.read_text())
+    content = CONFIG_PATH.read_text().strip()
+    if content:
+        config = json.loads(content)
 
 DEFAULT_LLM_PROVIDER = "OpenAI"
 DEFAULT_WEB_SEARCH_PROVIDER = "DuckDuckGo"
