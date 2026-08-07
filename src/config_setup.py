@@ -236,10 +236,31 @@ def validate_paths():
     sys.exit(1)
 
 
+def ensure_valid_config_json():
+    """If CONFIG_PATH exists but its content isn't valid JSON (empty or
+    corrupted), normalize it to "{}" so the rest of run_config() can just
+    treat it as an ordinary empty config instead of a broken file."""
+    if not CONFIG_PATH.is_file():
+        return
+
+    content = CONFIG_PATH.read_text().strip()
+    if content:
+        try:
+            json.loads(content)
+            return
+        except json.JSONDecodeError:
+            pass
+
+    CONFIG_PATH.write_text("{}\n")
+
+
 def run_config():
     validate_paths()
+    ensure_valid_config_json()
 
-    if CONFIG_PATH.is_file() and CONFIG_PATH.read_text().strip():
+    config = json.loads(CONFIG_PATH.read_text())
+
+    if config:
         update_config()
     else:
         setup_config()
