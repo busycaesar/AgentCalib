@@ -51,24 +51,24 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 ```text
 .
  src/
- ├── main.py            # Entry point
- ├── config_setup.py    # Guided setup/update for provider config and credentials
- ├── communications.py  # Picks and launches the configured front-end
- ├── core/       # Agent loop and skill/tool orchestration
- ├── adapters/   # Per-provider LLM and web-search adapters behind common interfaces
+ ├── main.py                     # Entry point
+ ├── config_setup.py             # Guided setup/update for provider config and credentials
+ ├── communications.py           # Picks and launches the configured front-end
+ ├── core/                       # Agent loop and skill/tool orchestration
+ ├── adapters/                   # Per-provider LLM and web-search adapters behind common interfaces
  │    ├── llm_providers/
  │    └── web_search_providers/
- ├── config/     # Provider selection, seed messages, and shared paths
- ├── extensions/ # Skills, tools, and MCP servers available to the agent
+ ├── config/                     # Provider selection, seed messages, and shared paths
+ ├── extensions/                 # Skills, tools, and MCP servers available to the agent
  │    ├── mcp_servers/
  │    ├── skills/
  │    └── tools/
- ├── ui/         # Front-ends: terminal chat loop and Discord bot
- └── utils/      # Shared helpers used across the codebase
+ ├── ui/                         # Front-ends: terminal chat loop and Discord bot
+ └── utils/                      # Shared helpers used across the codebase
  scripts/
- ├── install.sh              # Installs Mosfet into ~/.mosfet and adds `mosfet` to PATH
- ├── publish_docker_beta.sh  # Builds and pushes the beta Docker image
- └── restart_docker.sh       # Restarts the local Mosfet container
+ ├── install.sh                  # Installs Mosfet into ~/.mosfet and adds `mosfet` to PATH
+ ├── publish_docker_beta.sh      # Builds and pushes the beta Docker image
+ └── restart_docker.sh           # Restarts the local Mosfet container
 ```
 
 ## Commands
