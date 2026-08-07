@@ -7,6 +7,19 @@
 ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝     ╚══════╝   ╚═╝
 </pre>
 
+## Index
+
+- [Description](#description)
+- [Tech Stack](#tech-stack)
+- [AI Stack](#ai-stack)
+- [How it looks?](#how-it-looks)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Commands](#commands)
+- [How to run the project?](#how-to-run-the-project)
+- [License](#license)
+- [Author](#author)
+
 ## Description
 
 Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
@@ -135,7 +148,7 @@ This clones the latest Mosfet release, sets up an isolated Python environment, a
    ```yaml
    services:
      mosfet-app:
-       image: busycaesar/mosfet:beta
+       image: busycaesar/mosfet:latest
        volumes:
          - ./mosfet.config.json:/app/mosfet.config.json
          - ./.env:/app/.env
