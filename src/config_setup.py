@@ -5,12 +5,13 @@ own setup prompts) instead of a numbered menu.
 """
 
 import json
+import sys
 
 import questionary
 from questionary import Choice
 from dotenv import dotenv_values
 
-from config.paths import CONFIG_PATH, ENV_PATH, ENV_EXAMPLE_PATH
+from config.paths import CONFIG_PATH, ENV_PATH
 from config.providers import DEFAULT_LLM_PROVIDER, DEFAULT_WEB_SEARCH_PROVIDER, DEFAULT_MODELS
 
 SKIP = "__skip__"
@@ -71,8 +72,7 @@ def prompt_credential(env_key):
     warning that the app won't work until it's filled in — printed together
     with any others at the end of the run."""
     if not ENV_PATH.is_file():
-        ENV_PATH.write_text(ENV_EXAMPLE_PATH.read_text())
-        ENV_PATH.chmod(0o600)
+        ENV_PATH.touch(mode=0o600)
 
     if dotenv_values(ENV_PATH).get(env_key):
         return
@@ -218,7 +218,27 @@ def update_config():
     print_pending_warnings()
 
 
+def validate_paths():
+    """Docker bind-mounts CONFIG_PATH/ENV_PATH as files, but if the host path
+    doesn't exist yet when the container starts, Docker silently creates a
+    directory there instead of erroring — which then breaks every read/write
+    below. Catch that case with an actionable message instead of a raw
+    traceback."""
+    broken = [p for p in (CONFIG_PATH, ENV_PATH) if p.is_dir()]
+
+    if not broken:
+        return
+
+    names = " ".join(path.name for path in broken)
+    print("Please run this where your docker-compose.yml is, then restart the container:")
+    print(f"  rmdir {names}")
+    print(f"  touch {names}")
+    sys.exit(1)
+
+
 def run_config():
+    validate_paths()
+
     if CONFIG_PATH.is_file() and CONFIG_PATH.read_text().strip():
         update_config()
     else:
