@@ -1,4 +1,4 @@
-from adapters import llm
+from llm import llm
 from .slash_command import get_skill_content
 from extensions import tools, call_function
 import json
