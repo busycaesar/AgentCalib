@@ -1,1 +1,1 @@
-from .wrapper import GuardedLLM
+from .content import GuardedLLM
