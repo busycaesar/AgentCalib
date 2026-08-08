@@ -55,6 +55,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 - The agent knows which skills it has available and can recognize on its own when one applies, loading it without you having to ask
 - The agent can work through multiple steps on its own before giving you a final answer
 - The agent can search the web and read pages to answer questions that need current or specific information
+- Messages are checked for things like emails, phone numbers, and other personal information before they reach the LLM and before a response reaches you
 - Point the agent at whichever LLM provider and model you want, hosted or local
 - Set up or change your provider, model, and credentials anytime through a short guided prompt
 - Install once and run the agent from anywhere on your machine
@@ -65,6 +66,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 .
  src/
  ├── main.py                     # Entry point
+ ├── llm.py                      # Guarded LLM entry point used by the agent loop
  ├── config_setup.py             # Guided setup/update for provider config and credentials
  ├── communications.py           # Picks and launches the configured front-end
  ├── core/                       # Agent loop and skill/tool orchestration
@@ -76,6 +78,7 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
  │    ├── mcp_servers/
  │    ├── skills/
  │    └── tools/
+ ├── guardrails/                 # Content checks run on messages going into and out of the LLM
  ├── ui/                         # Front-ends: terminal chat loop and Discord bot
  └── utils/                      # Shared helpers used across the codebase
  scripts/
