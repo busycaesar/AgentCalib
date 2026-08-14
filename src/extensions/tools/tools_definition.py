@@ -1,5 +1,5 @@
 # The list of tools and required arguments, to assist the LLM.
-tools = [
+tool_schemas = [
     {
         "type": "function",
         "function": {
@@ -74,5 +74,56 @@ tools = [
             },
             "strict": True
         }
-    }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "int_add_mcp_server",
+            "description": "Connect a new MCP server so its tools become available to use. Validates the server and discovers its tools before saving. Provide either a url (HTTP server) or a command + args (stdio server) — never both.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "A short, filesystem-safe identifier for the server, used as its config filename and to prefix its tool names. Use snake_case, unless the user explicitly specifies a different name."
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "description": "The MCP server's HTTP endpoint URL. Set this for an HTTP server; leave null for a stdio server."
+                    },
+                    "command": {
+                        "type": ["string", "null"],
+                        "description": "The command to run for a stdio server (e.g. \"npx\"). Leave null for an HTTP server."
+                    },
+                    "args": {
+                        "type": ["array", "null"],
+                        "items": {"type": "string"},
+                        "description": "Arguments to pass to the command, for a stdio server (e.g. [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/some/dir\"]). Leave null for an HTTP server."
+                    },
+                },
+                "required": ["name", "url", "command", "args"],
+                "additionalProperties": False,
+            },
+            "strict": True
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "int_update_mcp_server",
+            "description": "Refresh an already-connected MCP server's tools, in case they changed on the server side (added, removed, or edited). Re-discovers using the server's already-known URL, so it doesn't need to be supplied again.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The exact name of an already-connected MCP server."
+                    },
+                },
+                "required": ["name"],
+                "additionalProperties": False,
+            },
+            "strict": True
+        }
+    },
 ]

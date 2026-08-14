@@ -1,6 +1,6 @@
 from llm import llm
 from .slash_command import get_skill_content
-from extensions import tools, call_function
+from extensions import get_tools, call_tool_function
 import json
 from utils import clean_response
 
@@ -27,7 +27,7 @@ def parse_user_input(messages, user_input):
     
 def agent_loop(messages):
     while True:
-        llm_message = llm.infer(messages, tools)
+        llm_message = llm.infer(messages, get_tools())
         
         if not llm_message.tool_calls:
             content = llm_message.content or ""
@@ -42,7 +42,7 @@ def agent_loop(messages):
             function_name = tool_call.function.name
             function_arguments = json.loads(tool_call.function.arguments)
             
-            result = call_function(function_name, function_arguments)
+            result = call_tool_function(function_name, function_arguments)
 
             tool_call_results.append((tool_call.id, json.dumps(result)))
 

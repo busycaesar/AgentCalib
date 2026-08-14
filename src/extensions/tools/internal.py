@@ -2,6 +2,7 @@ from config import SKILLS_PATH
 from utils import build_skill_file, update_skills_index, get_skill_by_name
 from adapters import web_search
 import trafilatura
+from ..mcp import add_mcp_server, update_mcp_server
 
 def create_new_skill(name, description, content):
     if not name or not name.strip():
@@ -51,7 +52,23 @@ def int_fetch_content_from_url(url):
 
     return content
 
-def call_function(name, args):
+def int_add_mcp_server(name, url, command, args):
+    try:
+        available_tool_names = add_mcp_server(name, url=url, command=command, args=args)
+    except Exception as error:
+        return f"Could not add MCP server '{name}': {error}"
+        
+    return f"Added MCP server '{name}'. Discovered tools: {','.join(available_tool_names)}"
+
+def int_update_mcp_server(name):
+    try:
+        available_tool_names = update_mcp_server(name)
+    except Exception as error:
+        return f"Could not update MCP server '{name}': {error}"
+
+    return f"Updated MCP server '{name}'. Discovered tools: {','.join(available_tool_names)}"
+
+def call_tool_function(name, args):
     if name == "int_add_new_skill":
         return int_add_new_skill(**args)
     elif name == "int_get_skill_content":
@@ -60,5 +77,9 @@ def call_function(name, args):
         return int_web_search_tool(**args)
     elif name == "int_fetch_content_from_url":
         return int_fetch_content_from_url(**args)
+    elif name == "int_add_mcp_server":
+        return int_add_mcp_server(**args)
+    elif name == "int_update_mcp_server":
+        return int_update_mcp_server(**args)
     else:
         return f"No tool available with name {name}."

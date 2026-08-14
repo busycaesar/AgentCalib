@@ -1,2 +1,2 @@
-from .internal import call_function
-from .tools_definition import tools
+from .internal import call_tool_function
+from .tools_definition import tool_schemas
