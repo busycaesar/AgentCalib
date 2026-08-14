@@ -1,4 +1,5 @@
 src/extensions/skills/
+src/extensions/mcp/servers/
 
 __pycache__/
 docs/
