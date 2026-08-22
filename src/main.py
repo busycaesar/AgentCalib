@@ -1,6 +1,6 @@
 import argparse
 from config_setup import run_config
-from communications import add_communications_arguments, run_communications
+from ui import add_communications_arguments, run_communications
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run Mosfet with the given interface.")
