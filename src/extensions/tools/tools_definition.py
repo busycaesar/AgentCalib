@@ -85,7 +85,7 @@ tool_schemas = [
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "A short, filesystem-safe identifier for the server, used as its config filename and to prefix its tool names. Use snake_case, unless the user explicitly specifies a different name."
+                        "description": "A short identifier for the server, used as its config filename and to prefix its tool names. Use a single lowercase word, letters and digits only — no underscores, hyphens, or spaces (any will be stripped out), unless the user explicitly specifies a different name."
                     },
                     "url": {
                         "type": ["string", "null"],
