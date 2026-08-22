@@ -1,23 +1,16 @@
-import sys
+from config_setup import check_config
+from ui import run_cli_chat, run_discord
 
-from config.paths import CONFIG_PATH
-
-UI = "CLI" # CLI, Web, Discord
-
-def add_communications_arguments(parser):
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--cli", action="store_const", dest="ui", const="CLI")
-    group.add_argument("--discord", action="store_const", dest="ui", const="Discord")
-    parser.set_defaults(ui=UI)
+def add_communications_arguments(subparsers):
+    # Discord
+    discord_parser = subparsers.add_parser("discord", help="Chat via Discord.")
+    discord_parser.add_argument("--foreground", "-f", action="store_true", help="Run Discord attached to this terminal instead of in the background.")
+    discord_parser.add_argument("--stop", action="store_true", help="Stop a background Discord bot.")
 
 def run_communications(args):
-    if not CONFIG_PATH.is_file():
-        print("No config found. Run 'mosfet config' to set up Mosfet.")
-        sys.exit(1)
+    check_config()
 
-    from ui import run_cli_chat, run_discord_chat
-
-    if args.ui == "CLI":
+    if args.command == "discord":
+        run_discord(foreground=args.foreground, stop=args.stop)
+    else:
         run_cli_chat()
-    elif args.ui == "Discord":
-        run_discord_chat()
