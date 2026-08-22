@@ -5,6 +5,9 @@ SKILLS_INDEX_FILE = "index.json"
 CONFIG_FILE = "mosfet.config.json"
 ENV_FILE = ".env"
 MCP_SERVERS_DIR = "extensions/mcp/servers"
+RUNTIME_DIR = "runtime"
+DISCORD_LOG_FILE = "discord.log"
+DISCORD_PID_FILE = "discord.pid"
 
 SKILLS_PATH = Path(__file__).resolve().parent.parent / SKILLS_DIR
 SKILLS_INDEX_PATH = SKILLS_PATH / SKILLS_INDEX_FILE
@@ -12,3 +15,6 @@ MCP_SERVERS_PATH = Path(__file__).resolve().parent.parent / MCP_SERVERS_DIR
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent.parent / CONFIG_FILE
 ENV_PATH = Path(__file__).resolve().parent.parent.parent / ENV_FILE
+RUNTIME_PATH = Path(__file__).resolve().parent.parent.parent / RUNTIME_DIR
+DISCORD_LOG_PATH = RUNTIME_PATH / DISCORD_LOG_FILE
+DISCORD_PID_PATH = RUNTIME_PATH / DISCORD_PID_FILE

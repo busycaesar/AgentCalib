@@ -11,8 +11,7 @@ import questionary
 from questionary import Choice
 from dotenv import dotenv_values
 
-from config.paths import CONFIG_PATH, ENV_PATH
-from config.providers import DEFAULT_LLM_PROVIDER, DEFAULT_WEB_SEARCH_PROVIDER, DEFAULT_MODELS
+from config import CONFIG_PATH, ENV_PATH, DEFAULT_LLM_PROVIDER, DEFAULT_WEB_SEARCH_PROVIDER, DEFAULT_MODELS
 
 SKIP = "__skip__"
 DONE = "Done"
@@ -234,6 +233,13 @@ def validate_paths():
     print(f"  rmdir {names}")
     print(f"  touch {names}")
     sys.exit(1)
+
+
+def check_config():
+    """Gate for any command that actually needs mosfet.config.json. Missing is fatal, invalid JSON is a warning (defaults are used instead)."""
+    if not CONFIG_PATH.is_file():
+        print("No config found. Run 'mosfet config' to set up Mosfet.")
+        sys.exit(1)
 
 
 def ensure_valid_config_json():
