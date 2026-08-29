@@ -1,6 +1,6 @@
 from config import SKILLS_PATH
 from utils import build_skill_file, update_skills_index, get_skill_by_name
-from adapters import web_search
+from adapters import get_web_search
 import trafilatura
 from ..mcp import add_mcp_server, update_mcp_server
 
@@ -37,7 +37,7 @@ def int_get_skill_content(name):
     return content
 
 def int_web_search_tool(query):
-    return web_search.search(query)
+    return get_web_search().search(query)
 
 def int_fetch_content_from_url(url):
     downloaded = trafilatura.fetch_url(url)
