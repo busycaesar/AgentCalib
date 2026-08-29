@@ -1,10 +1,16 @@
 import time
+from prompt_toolkit import prompt
+from prompt_toolkit.history import InMemoryHistory
+from prompt_toolkit.formatted_text import ANSI
 from rich.console import Console
 from rich.markup import escape
 from core import parse_user_input, messages
 from config import BANNER, WELCOME_MESSAGE, GOODBYE_MESSAGE
 
 console = Console()
+
+PROMPT = ANSI("\033[1m\033[38;2;250;104;0m❯\033[0m ")
+history = InMemoryHistory()
 
 def run_cli_chat():
     console.print(BANNER, style="bold #fa6800")
@@ -13,7 +19,7 @@ def run_cli_chat():
     while True:
         try:
             console.print()
-            user_input = console.input("[bold #fa6800]❯[/bold #fa6800] ")
+            user_input = prompt(PROMPT, history=history)
         except (KeyboardInterrupt, EOFError):
             console.print(f"\n{GOODBYE_MESSAGE}")
             break
