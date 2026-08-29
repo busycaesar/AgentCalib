@@ -101,14 +101,18 @@ def prompt_channels(config):
     selected_channels = questionary.checkbox(
         "Which communication channels would you like to set up? (CLI is always available)",
         choices=[
-            Choice(title=channel, value=channel, checked=channel in current)
-            for channel in CHANNEL_API_KEY_ENV
+            *[Choice(title=channel, value=channel, checked=channel in current) 
+            for channel in CHANNEL_API_KEY_ENV],
+            Choice(title="Skip", value=SKIP),
         ],
     ).ask()
 
-    config["COMMUNICATION_CHANNELS"] = selected_channels or []
+    if not selected_channels or SKIP in selected_channels:
+        selected_channels = []
 
-    for channel in selected_channels or []:
+    config["COMMUNICATION_CHANNELS"] = selected_channels
+
+    for channel in selected_channels:
         prompt_credential(CHANNEL_API_KEY_ENV[channel])
 
 
@@ -242,12 +246,11 @@ def check_config():
         sys.exit(1)
 
 
-def ensure_valid_config_json():
-    """If CONFIG_PATH exists but its content isn't valid JSON (empty or
-    corrupted), normalize it to "{}" so the rest of run_config() can just
-    treat it as an ordinary empty config instead of a broken file."""
+def normalize_config_json():
+    """If CONFIG_PATH is missing, empty, or isn't valid JSON, normalize it to "{}" so the rest of run_config() can just treat it as an ordinary empty config instead of a broken or absent file.
+    """
     if not CONFIG_PATH.is_file():
-        return
+        CONFIG_PATH.touch()
 
     content = CONFIG_PATH.read_text().strip()
     if content:
@@ -259,10 +262,9 @@ def ensure_valid_config_json():
 
     CONFIG_PATH.write_text("{}\n")
 
-
 def run_config():
     validate_paths()
-    ensure_valid_config_json()
+    normalize_config_json()
 
     config = json.loads(CONFIG_PATH.read_text())
 
