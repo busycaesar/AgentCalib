@@ -24,7 +24,7 @@
 
 Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** and **MCP Servers**. Each skill describes a capability or piece of knowledge the agent can draw on, tools let it take action, and MCP servers connect it to external systems. The goal is to empower the LLM by simply dropping in more of these building blocks.
 
-> **Status: early-stage / work in progress.** The current codebase implements a chat-completion agent that is model-agnostic — you point it at whichever LLM provider and model you want to use, whether hosted or running locally — with an interactive terminal chat loop, a tool the LLM can call to save new skills, and a `/skill_name` chat command that loads a saved skill back into the conversation. The agent is also told what skills are available to it at the start of every conversation, and can decide on its own to load and follow one when it fits the request. The agent can chain multiple tool calls in a row before giving a final answer. MCP server support is not yet implemented.
+> **Status: early-stage / work in progress.** A model-agnostic chat agent that reasons through multiple tool calls before answering, extending itself with skills and MCP servers along the way, with guardrails checking what goes in and out.
 
 ## Tech Stack
 
@@ -48,17 +48,14 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
 
 ## Features
 
-- Chat with the agent right from your terminal
-- Chat with the agent through direct messages on Discord
-- Ask the agent to create a new skill, and it will save one for later use
-- Bring a saved skill into a conversation whenever you need it
-- The agent knows which skills it has available and can recognize on its own when one applies, loading it without you having to ask
-- The agent can work through multiple steps on its own before giving you a final answer
-- The agent can search the web and read pages to answer questions that need current or specific information
-- Messages are checked for things like emails, phone numbers, and other personal information before they reach the LLM and before a response reaches you
-- Point the agent at whichever LLM provider and model you want, hosted or local
-- Set up or change your provider, model, and credentials anytime through a short guided prompt
-- Install once and run the agent from anywhere on your machine
+- Chat with the agent through your terminal or other communication channels.
+- The agent can create skills for itself and reuse them whenever they apply.
+- Connect the agent to MCP servers so it can use their tools.
+- The agent can work through multiple steps on its own before giving you a final answer.
+- See what the agent is doing as it works, like loading a skill or calling a tool, instead of just watching a spinner.
+- Messages are checked for sensitive personal information before they reach the LLM and before a response reaches you.
+- Point the agent at whichever LLM provider and model you want, hosted or local, and change it anytime.
+- Install once and run the agent from anywhere on your machine.
 
 ## Project Structure
 
@@ -68,14 +65,13 @@ Mosfet is an LLM-powered agent that you extend by adding **Skills**, **Tools** a
  ├── main.py                     # Entry point
  ├── llm.py                      # Guarded LLM entry point used by the agent loop
  ├── config_setup.py             # Guided setup/update for provider config and credentials
- ├── communications.py           # Picks and launches the configured front-end
  ├── core/                       # Agent loop and skill/tool orchestration
  ├── adapters/                   # Per-provider LLM and web-search adapters behind common interfaces
  │    ├── llm_providers/
  │    └── web_search_providers/
  ├── config/                     # Provider selection, seed messages, and shared paths
  ├── extensions/                 # Skills, tools, and MCP servers available to the agent
- │    ├── mcp_servers/
+ │    ├── mcp/
  │    ├── skills/
  │    └── tools/
  ├── guardrails/                 # Content checks run on messages going into and out of the LLM
@@ -103,11 +99,12 @@ Start chatting. Defaults to the terminal.
 mosfet
 ```
 
-Start chatting on a specific communication channel.
+Start chatting on Discord. Runs in the background by default so you don't need to keep a terminal open for it.
 
 ```bash
-mosfet --<channel>
-# cli, discord
+mosfet discord              # start in the background
+mosfet discord --foreground # attach to this terminal instead
+mosfet discord --stop       # stop a background bot
 ```
 
 ## How to run the project?

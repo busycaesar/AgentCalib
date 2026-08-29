@@ -3,6 +3,7 @@ from .discord import run_discord
 from config_setup import check_config
 
 def add_communications_arguments(subparsers):
+    # Discord
     discord_parser = subparsers.add_parser("discord", help="Chat via Discord.")
     discord_parser.add_argument("--foreground", "-f", action="store_true", help="Run Discord attached to this terminal instead of in the background.")
     discord_parser.add_argument("--stop", action="store_true", help="Stop a background Discord bot.")
