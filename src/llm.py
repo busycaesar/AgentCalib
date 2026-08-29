@@ -1,4 +1,5 @@
-from adapters import llm as raw_llm
+from adapters import get_llm as get_raw_llm
 from guardrails import GuardedLLM
 
-llm = GuardedLLM(raw_llm)
+def get_llm():
+    return GuardedLLM(get_raw_llm())

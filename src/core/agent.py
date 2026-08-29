@@ -1,4 +1,4 @@
-from llm import llm
+from llm import get_llm
 from .slash_command import get_skill_content
 from .agent_log import log_skill_injection, log_llm_call, log_tool_call
 from extensions import get_tools, call_tool_function
@@ -28,6 +28,8 @@ def parse_user_input(messages, user_input):
     return response
     
 def agent_loop(messages):
+    llm = get_llm()
+
     while True:
         llm_message = llm.infer(messages, get_tools())
         
