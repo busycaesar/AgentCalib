@@ -3,8 +3,6 @@ import re
 PII_PATTERNS = {
     "email": re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+"),
     "phone": re.compile(r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b"),
-    "credit_card": re.compile(r"\b(?:\d[ -]*?){13,16}\b"),
-    "ssn": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
 }
 
 # Banned words/phrases
