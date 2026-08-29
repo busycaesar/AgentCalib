@@ -4,7 +4,7 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.formatted_text import ANSI
 from rich.console import Console
 from rich.markup import escape
-from core import parse_user_input, messages
+from core import parse_user_input, build_initial_messages
 from config import BANNER, WELCOME_MESSAGE, GOODBYE_MESSAGE
 
 console = Console()
@@ -13,6 +13,8 @@ PROMPT = ANSI("\033[1m\033[38;2;250;104;0m❯\033[0m ")
 history = InMemoryHistory()
 
 def run_cli_chat():
+    messages = build_initial_messages()
+
     console.print(BANNER, style="bold #fa6800")
     console.print(WELCOME_MESSAGE)
 

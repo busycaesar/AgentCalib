@@ -3,7 +3,7 @@ import sys
 import signal
 import subprocess
 import discord
-from core import parse_user_input, messages
+from core import parse_user_input, build_initial_messages
 from config import DISCORD_BOT_TOKEN, DISCORD_MESSAGE_LIMIT, RUNTIME_PATH, DISCORD_LOG_PATH, DISCORD_PID_PATH
 
 intents = discord.Intents.default()
@@ -35,7 +35,7 @@ async def on_message(message):
 
     async with message.channel.typing():
         try:
-            response = parse_user_input(messages, message.content)
+            response = parse_user_input(client.messages, message.content)
         except Exception as error:
             await message.channel.send(f"Error: {error}. Please try again.")
             return
@@ -53,6 +53,8 @@ def run_discord(foreground=False, stop=False):
 def run_discord_chat():
     if not DISCORD_BOT_TOKEN:
         raise RuntimeError("DISCORD_BOT_TOKEN is not set. Add it to your .env file before running Mosfet.")
+
+    client.messages = build_initial_messages()
 
     client.run(DISCORD_BOT_TOKEN)
 
