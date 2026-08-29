@@ -7,6 +7,8 @@ docs/
 # per-installation Mosfet config (see mosfet.config.example.json)
 mosfet.config.json
 
+.claude/
+
 # Logs
 logs
 *.log
