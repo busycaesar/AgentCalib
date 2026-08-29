@@ -1,24 +1,26 @@
 from llm import llm
 from .slash_command import get_skill_content
+from .agent_log import log_skill_injection, log_llm_call, log_tool_call
 from extensions import get_tools, call_tool_function
 import json
 from utils import clean_response
 
 def parse_user_input(messages, user_input):
+    original_length = len(messages)
+
     try:
         skill_content = get_skill_content(user_input)
 
         if skill_content is not None:
             messages.append({"role": "system", "content": skill_content})
+            log_skill_injection(user_input)
 
         messages.append({"role": "user", "content": user_input})
 
         response = agent_loop(messages)
        
     except Exception:
-        messages.pop()
-        if skill_content is not None:
-            messages.pop()
+        del messages[original_length:]
         raise
 
     messages.append({"role": "assistant", "content": response})
@@ -41,8 +43,10 @@ def agent_loop(messages):
         for tool_call in llm_message.tool_calls:
             function_name = tool_call.function.name
             function_arguments = json.loads(tool_call.function.arguments)
-            
+
+            log_llm_call(function_name, function_arguments)
             result = call_tool_function(function_name, function_arguments)
+            log_tool_call(function_name)
 
             tool_call_results.append((tool_call.id, json.dumps(result)))
 
