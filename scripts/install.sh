@@ -9,7 +9,7 @@ set -euo pipefail
 # =============================================================================
 
 REPO_URL="https://github.com/busycaesar/Mosfet.git"
-INSTALL_DIR="$HOME/.mosfet"
+INSTALL_DIR="${MOSFET_INSTALL_DIR:-$HOME/.mosfet}"
 VENV_DIR="$INSTALL_DIR/.venv"
 BIN_DIR="$HOME/.local/bin"
 LAUNCHER="$BIN_DIR/mosfet"

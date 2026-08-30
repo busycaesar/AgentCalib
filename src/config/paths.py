@@ -10,11 +10,12 @@ DISCORD_LOG_FILE = "discord.log"
 DISCORD_PID_FILE = "discord.pid"
 
 SKILLS_PATH = Path(__file__).resolve().parent.parent / SKILLS_DIR
-SKILLS_INDEX_PATH = SKILLS_PATH / SKILLS_INDEX_FILE
 MCP_SERVERS_PATH = Path(__file__).resolve().parent.parent / MCP_SERVERS_DIR
+ROOT_PATH = Path(__file__).resolve().parent.parent.parent
 
-CONFIG_PATH = Path(__file__).resolve().parent.parent.parent / CONFIG_FILE
-ENV_PATH = Path(__file__).resolve().parent.parent.parent / ENV_FILE
-RUNTIME_PATH = Path(__file__).resolve().parent.parent.parent / RUNTIME_DIR
+SKILLS_INDEX_PATH = SKILLS_PATH / SKILLS_INDEX_FILE
+CONFIG_PATH = ROOT_PATH / CONFIG_FILE
+ENV_PATH = ROOT_PATH / ENV_FILE
+RUNTIME_PATH = ROOT_PATH / RUNTIME_DIR
 DISCORD_LOG_PATH = RUNTIME_PATH / DISCORD_LOG_FILE
 DISCORD_PID_PATH = RUNTIME_PATH / DISCORD_PID_FILE
