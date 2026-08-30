@@ -6,11 +6,9 @@ own setup prompts) instead of a numbered menu.
 
 import json
 import sys
-
 import questionary
 from questionary import Choice
 from dotenv import dotenv_values
-
 from config import CONFIG_PATH, ENV_PATH, DEFAULT_LLM_PROVIDER, DEFAULT_WEB_SEARCH_PROVIDER, DEFAULT_MODELS
 
 SKIP = "__skip__"
